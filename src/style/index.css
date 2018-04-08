@@ -1,0 +1,212 @@
+/* 
+    Color palette used for the web app :
+
+      #e9ecef -- Bg for most of the pages
+      #343a40 -- Input bg for the login fields
+      aliceblue -- Alot of the text on the darker backgrounds
+      #559eff -- The active element color for the poll view
+      #1b1b1b -- Bg for some elements
+      Red & White for misc elements
+*/
+@font-face {
+  font-family: Lato;
+  src: url(./fonts/Lato-Bold.ttf);
+}
+
+body {
+  font-family: "Lato", sans-serif !important;
+  background: #e9ecef;
+}
+
+/* Background Animation for Login Page */
+.animate_body {
+  width: 100wh;
+  height: 100vh;
+  background: linear-gradient(-45deg, #2600ff, #ff7300);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 20s ease infinite;
+  -moz-animation: Gradient 20s ease infinite;
+  animation: Gradient 20s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* The Login Wrap */
+.login-wrapper {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 960px;
+  padding-right: 10px;
+  padding-left: 10px;
+  color: #343a40;
+}
+
+/* Student ID field styling */
+#number_input_style {
+  width: 300px;
+  color: aliceblue;
+  background: #343a40;
+  border-color: #343a40;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Password field styling  */
+#password_input_style {
+  width: 300px;
+  color: aliceblue;
+  background: #343a40;
+  border-color: #343a40;
+}
+
+.admin_main_display {
+  padding-top: 100px;
+}
+
+.admin_table {
+  padding-top: 100px;
+}
+
+/* Admin NavBar */
+.navbar {
+  background: #1b1b1b !important;
+}
+
+.navbar-brand {
+  font-size: 20px;
+}
+
+/* Admin SideBar */
+.sidebar {
+  position: fixed;
+  margin-top: 50px;
+  min-width: 250px;
+  max-width: 250px;
+  height: 100%;
+  background: #1b1b1b !important;
+}
+
+.sidebar-vote {
+  position: fixed;
+  min-width: 250px;
+  max-width: 250px;
+  height: 100%;
+  background: #1b1b1b !important;
+}
+
+.flex-column {
+  margin-top: 25px;
+}
+
+.sidebar a {
+  margin: 7px;
+}
+
+/* Poll View CSS */
+.jumbotron {
+  padding-left: 320px;
+}
+
+.poll_candidate {
+  margin-top: -3%;
+  margin-left: 320px;
+  width: 700px;
+}
+
+.submit_vote {
+  padding-top: 100px;
+  margin-left: 400px;
+}
+
+.candidate_wrap {
+  width: 500px;
+}
+
+.committee_names {
+  margin-left: 50px;
+  margin-top: 30px;
+  font-size: 30px;
+  color: aliceblue;
+}
+
+.input-group-text {
+  background-color: white;
+  border-radius: 100px;
+  width: 200px;
+}
+
+.select_style {
+  font-size: 20px;
+  width: 0px;
+}
+
+.active {
+  color: #559eff;
+}
+
+/* Common Usage */
+.nav-shadow {
+  -webkit-box-shadow: 8px 10px 12px 0px rgba(0, 0, 0, 0.33);
+  -moz-box-shadow: 8px 10px 12px 0px rgba(0, 0, 0, 0.33);
+  box-shadow: 8px 10px 12px 0px rgba(0, 0, 0, 0.33);
+}
+
+.next_btn_style {
+  margin-right: 10px;
+}
+
+.btn_placement {
+  margin-top: 30px;
+}
+
+.input_style {
+  width: 400px;
+}
+
+.helper_text {
+  font-size: 14px;
+  color: red;
+}

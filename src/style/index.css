@@ -65,6 +65,18 @@ body {
   }
 }
 
+/* Login Error Messages */
+.helper_text_login {
+  font-size: 14px;
+  color: red;
+}
+
+.helper_text_login_error {
+  padding: 10px;
+  font-size: 14px;
+  color: red;
+}
+
 /* The Login Wrap */
 .login-wrapper {
   margin-right: auto;
@@ -194,10 +206,6 @@ input[type="number"] {
   box-shadow: 8px 10px 12px 0px rgba(0, 0, 0, 0.33);
 }
 
-.next_btn_style {
-  margin-right: 10px;
-}
-
 .btn_placement {
   margin-top: 30px;
 }
@@ -207,6 +215,7 @@ input[type="number"] {
 }
 
 .helper_text {
+  padding: 10px;
   font-size: 14px;
   color: red;
 }

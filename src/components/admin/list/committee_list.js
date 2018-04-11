@@ -5,9 +5,7 @@ import { fetchCommittees } from "../../../store/actions/index";
 
 class CommitteeList extends Component {
   componentDidMount() {
-    if (!this.props.committee) {
-      this.props.fetchCommittees();
-    }
+    this.props.fetchCommittees();
   }
 
   renderCommittees() {
@@ -16,6 +14,11 @@ class CommitteeList extends Component {
         <tr key={committee._id}>
           <td>{committee.comName}</td>
           <td>{committee.batch}</td>
+          <td>
+            {_.map(committee.candidates, candidates => {
+              return `${candidates.name}, `;
+            })}
+          </td>
         </tr>
       );
     });
@@ -29,6 +32,7 @@ class CommitteeList extends Component {
             <tr>
               <th>Name</th>
               <th>Batch</th>
+              <th>Candidates</th>
             </tr>
           </thead>
           <tbody>{this.renderCommittees()}</tbody>

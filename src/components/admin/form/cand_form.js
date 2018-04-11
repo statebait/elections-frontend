@@ -14,7 +14,6 @@ class CandidateForm extends Component {
         <input
           placeholder={`Enter ${field.label}`}
           className="form-control"
-          type="text"
           {...field.input}
         />
         <div className="helper_text">{touched ? error : ""}</div>
@@ -23,7 +22,7 @@ class CandidateForm extends Component {
   }
 
   onSubmit(values) {
-    this.props.sendCandidate(values);
+    this.props.sendCandidate(values, this.props.admin.token);
     console.log(values);
   }
 
@@ -46,6 +45,12 @@ class CandidateForm extends Component {
           />
           <BatchSelect />
           <CommitteeSelect />
+          <Field
+            label="HMC Floor"
+            name="comName"
+            type="name"
+            component={this.renderField}
+          />
           <Field
             label="CPI"
             name="cpi"
@@ -91,6 +96,10 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(state) {
+  return { admin: state.admin };
+}
+
 export default reduxForm({ validate, form: "candForm" })(
-  connect(null, { sendCandidate })(CandidateForm)
+  connect(mapStateToProps, { sendCandidate })(CandidateForm)
 );

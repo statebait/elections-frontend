@@ -10,12 +10,14 @@ const HeadStyle = {
   color: "#343a40"
 };
 
-const HelperText = {
-  fontSize: "14px",
-  color: "aliceblue"
-};
-
 class LoginPage extends Component {
+  componentWillReceiveProps() {
+    if (this.props.login.page === "poll") {
+      this.props.history.push("/poll");
+    } else if (this.props.login.page === "admin") {
+      this.props.history.push("/admin");
+    }
+  }
   renderField(field) {
     const { meta: { touched, error } } = field;
     return (
@@ -28,50 +30,52 @@ class LoginPage extends Component {
           type={field.type}
           {...field.input}
         />
-        <div style={HelperText}>{touched ? error : ""}</div>
+        <div
+          className="helper_text_login
+        "
+        >
+          {touched ? error : ""}
+        </div>
       </div>
     );
   }
 
   onSubmit(values) {
     this.props.loginAuth(values);
-    this.props.history.push("/poll");
   }
 
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div className="animate_body">
-        <div className="login-wrapper">
-          <div style={HeadStyle}>
-            <p>DA-IICT Elections</p>
-          </div>
+      <div className="login-wrapper">
+        <div style={HeadStyle}>
+          <p>DA-IICT Elections</p>
+        </div>
 
-          <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-            <div>
-              <Field
-                name="sid"
-                label="Student ID:"
-                type="number"
-                component={this.renderField}
-              />
-              <Field
-                name="pwd"
-                label="Password:"
-                type="password"
-                component={this.renderField}
-              />
-            </div>
-            <button type="submit" className="btn btn-outline-dark">
-              Login
-            </button>
-            <Link to="/admin/" className="btn btn-outline-dark">
-              Admin
-            </Link>
-            <Link to="/poll" className="btn btn-outline-dark">
-              TEMP-LOGIN
-            </Link>
-          </form>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <div>
+            <Field
+              name="sid"
+              label="Student ID:"
+              type="number"
+              component={this.renderField}
+            />
+            <Field
+              name="pwd"
+              label="Password:"
+              type="password"
+              component={this.renderField}
+            />
+          </div>
+          <button type="submit" className="btn btn-outline-dark">
+            Login
+          </button>
+          <Link to="/admin/" className="btn btn-outline-dark">
+            Admin
+          </Link>
+        </form>
+        <div className="helper_text_login_error">
+          {this.props.login.message}
         </div>
       </div>
     );
@@ -98,6 +102,10 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(state) {
+  return { login: state.login };
+}
+
 export default reduxForm({ validate, form: "login" })(
-  connect(null, { loginAuth })(LoginPage)
+  connect(mapStateToProps, { loginAuth })(LoginPage)
 );

@@ -3,27 +3,53 @@ import { reset } from "redux-form";
 
 const ROOT_URL = "http://localhost:5000/";
 
-export const LOGIN_AUTH = "login_auth";
+export const OPEN_POLL = "open_poll";
+export const OPEN_ADMIN = "open_admin";
+export const LOGIN_FAIL = "login_fail";
 export const SEND_CANDIDATE = "send_candidate";
 export const SEND_COMMITTEE = "send_committee";
 export const FETCH_CANDIDATES = "fetch_candidates";
 export const FETCH_COMMITTEES = "fetch_committees";
 export const DISPLAY_POLL = "display_poll";
+export const HASH_FINAL = "hash_final";
 export const NEXT_POLL = "next_poll";
 export const STORE_POLL = "store_poll";
 export const VOTE_STORE = "vote_store";
 export const FINAL_SUBMIT = "final_submit";
+export const ADMIN_LOGIN = "admin_login";
 
 export function loginAuth(values) {
   const request = axios.post(`${ROOT_URL}login`, values);
-
   return dispatch => {
     request.then(data => {
-      dispatch({ type: LOGIN_AUTH });
-      dispatch({
-        type: STORE_POLL,
-        payload: data
-      });
+      if (
+        data.data.message === "Incorrect Password" ||
+        data.data.message === "User Not Found" ||
+        data.data.message === "User Has Already Voted"
+      ) {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: data
+        });
+      } else {
+        if (data.data.admin === true) {
+          dispatch({ type: OPEN_ADMIN });
+          dispatch({ type: ADMIN_LOGIN, payload: data });
+        } else {
+          dispatch({ type: OPEN_POLL });
+          dispatch({
+            type: STORE_POLL,
+            payload: data
+          });
+          dispatch({
+            type: DISPLAY_POLL
+          });
+          dispatch({
+            type: HASH_FINAL,
+            payload: values
+          });
+        }
+      }
     });
   };
 }
@@ -44,18 +70,32 @@ export function voteStore(voteDetail) {
   };
 }
 
-export function finalSubmit(vote) {
+export function finalSubmit(vote, token) {
+  console.log(vote);
+  console.log(token);
+  const request = axios({
+    method: "post",
+    url: `${ROOT_URL}vote`,
+    data: vote,
+    headers: { "x-access-token": token }
+  });
   return dispatch => {
-    dispatch({
-      type: FINAL_SUBMIT,
-      payload: vote
-    });
+    request.then(
+      dispatch({
+        type: FINAL_SUBMIT,
+        payload: vote
+      })
+    );
   };
 }
 
-export function sendCandidate(values) {
-  const request = axios.post(`${ROOT_URL}candidate`, values);
-
+export function sendCandidate(values, token) {
+  const request = axios({
+    method: "post",
+    url: `${ROOT_URL}candidate`,
+    data: values,
+    headers: { "x-access-token": token }
+  });
   return dispatch => {
     request.then(data => {
       dispatch({
@@ -67,9 +107,13 @@ export function sendCandidate(values) {
   };
 }
 
-export function sendCommittee(values) {
-  const request = axios.post(`${ROOT_URL}committee`, values);
-
+export function sendCommittee(values, token) {
+  const request = axios({
+    method: "post",
+    url: `${ROOT_URL}committee`,
+    data: values,
+    headers: { "x-access-token": token }
+  });
   return dispatch => {
     request.then(data => {
       dispatch({

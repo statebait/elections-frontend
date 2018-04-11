@@ -11,7 +11,6 @@ class CommitteeSelect extends Component {
           <option value="">No Committee Selected</option>
           <option value="ACAD">Academic Committee</option>
           <option value="ICT">ICT Committee</option>
-          <option value="HMC">Hostel Management Committee</option>
           <option value="SPC">Student Placement Cell</option>
           <option value="SYN">Annual Festival Committee</option>
           <option value="CMC">Cafeteria Management Committee</option>

@@ -43,7 +43,7 @@ class PollView extends Component {
       if (i === 0) {
         prefArray.push(
           <Field
-            name={`${i}`}
+            name={`pref.${i}`}
             label={`1st Preference`}
             component={this.renderField.bind(this)}
             key={i}
@@ -52,7 +52,7 @@ class PollView extends Component {
       } else if (i === 1) {
         prefArray.push(
           <Field
-            name={`${i}`}
+            name={`pref.${i}`}
             label={`2nd Preference`}
             component={this.renderField.bind(this)}
             key={i}
@@ -61,7 +61,7 @@ class PollView extends Component {
       } else if (i === 2) {
         prefArray.push(
           <Field
-            name={`${i}`}
+            name={`pref.${i}`}
             label={`3rd Preference`}
             component={this.renderField.bind(this)}
             key={i}
@@ -70,7 +70,7 @@ class PollView extends Component {
       } else {
         prefArray.push(
           <Field
-            name={`${i}`}
+            name={`pref.${i}`}
             label={`${i + 1}th Preference`}
             component={this.renderField.bind(this)}
             key={i}
@@ -82,18 +82,31 @@ class PollView extends Component {
   };
 
   onSubmit(values) {
+    let newArray = [];
+    if (values.pref) {
+      for (let i = 0; i < values.pref.length; i++) {
+        if (values.pref[i]) {
+          newArray.push(values.pref[i]);
+        }
+      }
+    }
     const voteDetail = {
       comName: this.props.login.committee.comName,
       batch: this.props.login.committee.batch,
-      prefs: values
+      prefs: newArray
     };
+    console.log(newArray);
     this.props.voteStore(voteDetail);
     console.log(voteDetail);
     this.props.nextPoll();
   }
 
   voteSubmit() {
-    this.props.finalSubmit();
+    const finalPacket = {
+      sid: this.props.login.sid,
+      vote: this.props.login.vote
+    };
+    this.props.finalSubmit(finalPacket, this.props.login.token);
   }
 
   render() {
@@ -120,10 +133,7 @@ class PollView extends Component {
               {_.get(this.props.login.committee, "candidates") &&
                 this.renderFields()}
               <div className="btn_placement">
-                <button className="btn btn-outline-dark btn-lg next_btn_style">
-                  Next
-                </button>
-                <button className="btn btn-outline-danger btn-lg">Reset</button>
+                <button className="btn btn-outline-dark btn-lg">Next</button>
               </div>
             </form>
           </div>
@@ -135,11 +145,26 @@ class PollView extends Component {
 
 function validate(values) {
   const errors = {};
-  if (!values.one) {
-    errors.one = "Please select at least 1 Candidate";
+  if (values.pref) {
+    for (let i = 0; i < values.pref.length; i++) {
+      for (let j = 1; j < values.pref.length; j++) {
+        if (values.pref[i] === values.pref[j]) {
+          errors.pref = "Please do not repeat candidates";
+        }
+      }
+    }
+    if (!values.pref[0]) {
+      errors.pref =
+        "Please select at least 1 Candidate for your first preference";
+    }
   }
 
-  if (!values.props) return errors;
+  // if (!values.pref) {
+  //    errors.pref = "Please select at least 1 Candidate";
+  //  }
+  //  if (!values.pref)
+
+  return errors;
 }
 
 function mapStateToProps(state) {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import AdminNav from "./nav/admin_nav";
+import HmcForm from "./form/hmc_form";
 import CandidateForm from "./form/cand_form";
 import CommitteeForm from "./form/comm_form";
 import CandidateList from "./list/candidate_list";
@@ -18,6 +19,7 @@ class AdminMain extends Component {
             <Route path="/admin/candidate_form" component={CandidateForm} />
             <Route path="/admin/committee_form" component={CommitteeForm} />
             <Route path="/admin/candidate_list" component={CandidateList} />
+            <Route path="/admin/hmc_form" component={HmcForm} />
             <Route path="/admin/committee_list" component={CommitteeList} />
             <Route path="/admin/votes" component={VoteView} />
           </Switch>

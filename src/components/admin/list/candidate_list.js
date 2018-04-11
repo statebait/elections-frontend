@@ -5,9 +5,7 @@ import { fetchCandidates } from "../../../store/actions/index";
 
 class CandidateList extends Component {
   componentDidMount() {
-    if (!this.props.candidate) {
-      this.props.fetchCandidates();
-    }
+    this.props.fetchCandidates();
   }
 
   renderCandidates() {

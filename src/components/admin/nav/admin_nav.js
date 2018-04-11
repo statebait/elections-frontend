@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { fakeAuth } from "../../auth";
 
 const AdminTopNav = () => {
   return (
@@ -9,9 +10,13 @@ const AdminTopNav = () => {
       </a>
       <ul className="navbar-nav px-3">
         <li className="nav-item text-nowrap">
-          <Link to="/" className="btn btn-outline-danger">
+          <button
+            to="/"
+            onClick={fakeAuth.signout()}
+            className="btn btn-outline-danger"
+          >
             Sign Out
-          </Link>
+          </button>
         </li>
       </ul>
     </nav>
@@ -30,6 +35,11 @@ const AdminSideNav = () => {
         <li className="nav-item">
           <Link to="/admin/committee_form" className="nav-link">
             Committee Form
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/admin/hmc_form" className="nav-link">
+            HMC Form
           </Link>
         </li>
         <li className="nav-item">

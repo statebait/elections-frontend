@@ -13,13 +13,9 @@ class BatchSelect extends Component {
           <option value="1601">BTech 2016</option>
           <option value="1501">BTech 2015</option>
           <option value="1711">MTech 2017</option>
-          <option value="1611">MTech 2016</option>
           <option value="1712">MSc.IT 2017</option>
-          <option value="1612">MSc.IT 2016</option>
-          <option value="1714">MDes 2017</option>
-          <option value="1614">MDes 2016</option>
-          <option value="1613">MSc(ICT-ARD) 2016</option>
-          <option value="0021">PHD</option>
+          <option value="1712">MDes 2017</option>
+          <option value="1711">PHD</option>
         </select>
         <div className="helper_text">{touched ? error : ""}</div>
       </div>
@@ -31,7 +27,7 @@ class BatchSelect extends Component {
       <Field
         label="Batch"
         name="batch"
-        type="number"
+        type="string"
         component={this.renderSelect}
       />
     );

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import CommitteeSelect from "../select/comm_select";
-import BatchSelect from "../select/batch_select";
 import { sendCommittee } from "../../../store/actions/index";
 import { connect } from "react-redux";
 
-class CommitteeForm extends Component {
+class HmcForm extends Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
     return (
@@ -23,7 +21,8 @@ class CommitteeForm extends Component {
   }
 
   onSubmit(values) {
-    this.props.sendCommittee(values, this.props.admin.token);
+    const data = { comName: values.comName, seats: 1, batch: "0000" };
+    this.props.sendCommittee(data, this.props.admin.token);
   }
 
   render() {
@@ -31,12 +30,10 @@ class CommitteeForm extends Component {
     return (
       <div className="admin_main_display">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <CommitteeSelect />
-          <BatchSelect />
           <Field
-            label="Seats:"
-            name="seats"
-            type="number"
+            label="Floor:"
+            name="comName"
+            type="name"
             component={this.renderField}
           />
           <button type="submit" className="btn btn-primary">
@@ -52,17 +49,7 @@ function validate(values) {
   const errors = {};
 
   if (!values.comName) {
-    errors.comName = "Please select a committee";
-  }
-
-  if (!values.batch) {
-    errors.batch = "Please select a batch";
-  }
-
-  if (!values.seats) {
-    errors.seats = "Please enter the no. of seats";
-  } else if (isNaN(values.seats) || values.seats <= 0) {
-    errors.seats = "Please enter a valid no. of seats";
+    errors.comName = "Please enter a committee";
   }
 
   return errors;
@@ -72,6 +59,6 @@ function mapStateToProps(state) {
   return { admin: state.admin };
 }
 
-export default reduxForm({ validate, form: "commForm" })(
-  connect(mapStateToProps, { sendCommittee })(CommitteeForm)
+export default reduxForm({ validate, form: "HmcForm" })(
+  connect(mapStateToProps, { sendCommittee })(HmcForm)
 );

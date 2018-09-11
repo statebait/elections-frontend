@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import PollSideNav from "./poll_nav";
-import PollView from "./poll_view";
+import PollSideNav from "./PollNav";
+import PollView from "./PollView";
 
 class PollMain extends Component {
   render() {

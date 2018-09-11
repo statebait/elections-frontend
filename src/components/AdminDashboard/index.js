@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-
-import AdminNav from "./nav/admin_nav";
-import HmcForm from "./form/hmc_form";
-import CandidateForm from "./form/cand_form";
-import CommitteeForm from "./form/comm_form";
-import CandidateList from "./list/candidate_list";
-import CommitteeList from "./list/committee_list";
+//Component Imports
+import AdminNav from "./NavBar";
+import HmcForm from "./Forms/HmcForm";
+import CandidateForm from "./Forms/CandidateForm";
+import CommitteeForm from "./Forms/CommitteForm";
+import CandidateList from "./DataLists/CandidateList";
+import CommitteeList from "./DataLists/CommitteeList";
 import VoteView from "./vote_view";
 
-class AdminMain extends Component {
+class AdminDashboard extends Component {
   render() {
     return (
       <div>
@@ -29,4 +29,4 @@ class AdminMain extends Component {
   }
 }
 
-export default AdminMain;
+export default AdminDashboard;

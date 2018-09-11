@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { fakeAuth } from "../../auth";
 
 const AdminTopNav = () => {
   return (
@@ -10,11 +9,7 @@ const AdminTopNav = () => {
       </a>
       <ul className="navbar-nav px-3">
         <li className="nav-item text-nowrap">
-          <button
-            to="/"
-            onClick={fakeAuth.signout()}
-            className="btn btn-outline-danger"
-          >
+          <button to="/" className="btn btn-outline-danger">
             Sign Out
           </button>
         </li>

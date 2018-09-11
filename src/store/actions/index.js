@@ -17,10 +17,15 @@ export const STORE_POLL = "store_poll";
 export const VOTE_STORE = "vote_store";
 export const FINAL_SUBMIT = "final_submit";
 export const ADMIN_LOGIN = "admin_login";
+export const LOADING_START = "loading_start";
+export const LOADING_END = "loading_end";
 
 export function loginAuth(values) {
   const request = axios.post(`${ROOT_URL}login`, values);
   return dispatch => {
+    dispatch({
+      type: LOADING_START
+    });
     request.then(data => {
       if (
         data.data.message === "Incorrect Password" ||
@@ -31,10 +36,12 @@ export function loginAuth(values) {
           type: LOGIN_FAIL,
           payload: data
         });
+        dispatch({ type: LOADING_END });
       } else {
         if (data.data.admin === true) {
           dispatch({ type: OPEN_ADMIN });
           dispatch({ type: ADMIN_LOGIN, payload: data });
+          dispatch({ type: LOADING_END });
         } else {
           dispatch({ type: OPEN_POLL });
           dispatch({
@@ -48,6 +55,7 @@ export function loginAuth(values) {
             type: HASH_FINAL,
             payload: values
           });
+          dispatch({ type: LOADING_END });
         }
       }
     });

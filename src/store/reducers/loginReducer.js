@@ -31,7 +31,8 @@ export default function(state = INITIAL_STATE, action) {
       console.log("LOGIN FAILED:", action.payload.data.message);
       return {
         ...state,
-        message: action.payload.data.message
+        message: action.payload.data.message,
+        error: "Login has failed. Please try again"
       };
     case OPEN_POLL:
       return { ...state, page: "poll" };

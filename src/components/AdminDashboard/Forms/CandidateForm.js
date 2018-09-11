@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import CommitteeSelect from "../select/comm_select";
-import BatchSelect from "../select/batch_select";
+import CommitteeSelect from "../SelectOptions/CommitteeSelect";
+import BatchSelect from "../SelectOptions/BatchSelect";
 import { sendCandidate } from "../../../store/actions/index";
 import { connect } from "react-redux";
 
 class CandidateForm extends Component {
   renderField(field) {
-    const { meta: { touched, error } } = field;
+    const {
+      meta: { touched, error }
+    } = field;
     return (
       <div className="form-group">
         <label>{field.label}:</label>
@@ -101,5 +103,8 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({ validate, form: "candForm" })(
-  connect(mapStateToProps, { sendCandidate })(CandidateForm)
+  connect(
+    mapStateToProps,
+    { sendCandidate }
+  )(CandidateForm)
 );

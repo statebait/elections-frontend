@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginAuth } from "../store/actions/index";
+import { loginAuth } from "../../store/actions/index";
 
 const HeadStyle = {
   paddingTop: "80px",
@@ -11,36 +10,45 @@ const HeadStyle = {
 };
 
 class LoginPage extends Component {
-  componentWillReceiveProps() {
-    if (this.props.login.page === "poll") {
-      this.props.history.push("/poll");
-    } else if (this.props.login.page === "admin") {
-      this.props.history.push("/admin");
+  state = {
+    loading: false
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      if (this.props.login.error === "Login has failed. Please try again") {
+        this.setState({ loading: false });
+      }
+      if (this.props.login.page === "poll") {
+        this.props.history.push("/poll");
+      } else if (this.props.login.page === "admin") {
+        this.props.history.push("/admin");
+      }
     }
   }
+
   renderField(field) {
-    const { meta: { touched, error } } = field;
+    const {
+      meta: { touched, error }
+    } = field;
     return (
       <div className="form-group">
         <label>{field.label}</label>
         <input
           className="form-control"
+          style={{ borderRadius: 20 }}
           placeholder={`Enter ${field.label}`}
           id={`${field.type}_input_style`}
           type={field.type}
           {...field.input}
         />
-        <div
-          className="helper_text_login
-        "
-        >
-          {touched ? error : ""}
-        </div>
+        <div className="helper_text_login">{touched ? error : ""}</div>
       </div>
     );
   }
 
-  onSubmit(values) {
+  async onSubmit(values) {
+    await this.setState({ loading: true });
     this.props.loginAuth(values);
   }
 
@@ -67,12 +75,14 @@ class LoginPage extends Component {
               component={this.renderField}
             />
           </div>
-          <button type="submit" className="btn btn-outline-dark">
+          <button
+            type="submit"
+            style={{ borderRadius: 20, width: 100, marginTop: 30 }}
+            className="btn btn-outline-dark btn-block"
+            disabled={this.state.loading}
+          >
             Login
           </button>
-          <Link to="/admin/" className="btn btn-outline-dark">
-            Admin
-          </Link>
         </form>
         <div className="helper_text_login_error">
           {this.props.login.message}
@@ -107,5 +117,8 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({ validate, form: "login" })(
-  connect(mapStateToProps, { loginAuth })(LoginPage)
+  connect(
+    mapStateToProps,
+    { loginAuth }
+  )(LoginPage)
 );

@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import thunk from "redux-thunk";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
@@ -17,10 +17,9 @@ import reducers from "./store/reducers";
 import registerServiceWorker from "./registerServiceWorker";
 
 //Component Imports
-import { fakeAuth } from "./components/auth";
-import LoginPage from "./components/login_page";
-import PollMain from "./components/poll/poll_main";
-import AdminMain from "./components/admin/admin_main";
+import LoginPage from "./components/Login/";
+import PollMain from "./components/Poll/";
+import AdminDashboard from "./components/AdminDashboard";
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -28,7 +27,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <Switch>
-        <Route path="/admin" component={AdminMain} />
+        <Route path="/AdminDashboard" component={AdminDashboard} />
         <Route path="/poll" component={PollMain} />
         <Route path="/" component={LoginPage} />
       </Switch>

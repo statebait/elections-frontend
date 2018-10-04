@@ -15,6 +15,7 @@ class CommitteeForm extends Component {
         <label>{field.label}</label>
         <input
           placeholder={`Enter ${field.label}`}
+          style={{ width: 500 }}
           className="form-control"
           type="text"
           {...field.input}

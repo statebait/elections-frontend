@@ -7,7 +7,9 @@ import {
   VOTE_STORE,
   FINAL_SUBMIT,
   HASH_FINAL,
-  OPEN_ADMIN
+  OPEN_ADMIN,
+  LOADING_START,
+  LOADING_END
 } from "../actions";
 
 let key = 0;
@@ -22,17 +24,26 @@ const INITIAL_STATE = {
   vote: [],
   token: "",
   message: "",
-  page: ""
+  page: "",
+  loading: false
 };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case LOGIN_FAIL:
-      console.log("LOGIN FAILED:", action.payload.data.message);
+    case LOADING_START:
       return {
         ...state,
-        message: action.payload.data.message,
-        error: "Login has failed. Please try again"
+        loading: true
+      };
+    case LOADING_END:
+      return {
+        ...state,
+        loading: false
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        error: action.payload
       };
     case OPEN_POLL:
       return { ...state, page: "poll" };

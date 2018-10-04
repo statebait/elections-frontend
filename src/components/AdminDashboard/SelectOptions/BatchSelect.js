@@ -3,11 +3,18 @@ import { Field } from "redux-form";
 
 class BatchSelect extends Component {
   renderSelect(field) {
-    const { meta: { touched, error } } = field;
+    const {
+      meta: { touched, error }
+    } = field;
     return (
       <div className="form-group">
         <label>{field.label}:</label>
-        <select className="form-control" type="text" {...field.input}>
+        <select
+          className="form-control"
+          style={{ width: 500 }}
+          type="text"
+          {...field.input}
+        >
           <option value="">No Batch Selected</option>
           <option value="1701">BTech 2017</option>
           <option value="1601">BTech 2016</option>

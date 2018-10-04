@@ -14,6 +14,7 @@ class CandidateForm extends Component {
       <div className="form-group">
         <label>{field.label}:</label>
         <input
+          style={{ width: 500 }}
           placeholder={`Enter ${field.label}`}
           className="form-control"
           {...field.input}
@@ -63,6 +64,7 @@ class CandidateForm extends Component {
             Submit
           </button>
         </form>
+        <br />
       </div>
     );
   }

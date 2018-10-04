@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import thunk from "redux-thunk";
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
 //Global CSS File
 import "./style/index.css";
@@ -27,7 +26,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <Switch>
-        <Route path="/AdminDashboard" component={AdminDashboard} />
+        <Route path="/admin" component={AdminDashboard} />
         <Route path="/poll" component={PollMain} />
         <Route path="/" component={LoginPage} />
       </Switch>

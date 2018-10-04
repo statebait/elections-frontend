@@ -5,13 +5,16 @@ import { connect } from "react-redux";
 
 class HmcForm extends Component {
   renderField(field) {
-    const { meta: { touched, error } } = field;
+    const {
+      meta: { touched, error }
+    } = field;
     return (
       <div className="form-group">
         <label>{field.label}</label>
         <input
           placeholder={`Enter ${field.label}`}
           className="form-control"
+          style={{ width: 500 }}
           type="text"
           {...field.input}
         />
@@ -60,5 +63,8 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({ validate, form: "HmcForm" })(
-  connect(mapStateToProps, { sendCommittee })(HmcForm)
+  connect(
+    mapStateToProps,
+    { sendCommittee }
+  )(HmcForm)
 );

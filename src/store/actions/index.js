@@ -27,37 +27,29 @@ export function loginAuth(values) {
       type: LOADING_START
     });
     request.then(data => {
-      if (
-        data.data.message === "Incorrect Password" ||
-        data.data.message === "User Not Found" ||
-        data.data.message === "User Has Already Voted"
-      ) {
-        dispatch({
-          type: LOGIN_FAIL,
-          payload: data
-        });
+      if (data.data.admin === true) {
+        dispatch({ type: OPEN_ADMIN });
+        dispatch({ type: ADMIN_LOGIN, payload: data });
         dispatch({ type: LOADING_END });
       } else {
-        if (data.data.admin === true) {
-          dispatch({ type: OPEN_ADMIN });
-          dispatch({ type: ADMIN_LOGIN, payload: data });
-          dispatch({ type: LOADING_END });
-        } else {
-          dispatch({ type: OPEN_POLL });
-          dispatch({
-            type: STORE_POLL,
-            payload: data
-          });
-          dispatch({
-            type: DISPLAY_POLL
-          });
-          dispatch({
-            type: HASH_FINAL,
-            payload: values
-          });
-          dispatch({ type: LOADING_END });
-        }
+        dispatch({ type: OPEN_POLL });
+        dispatch({
+          type: STORE_POLL,
+          payload: data
+        });
+        dispatch({
+          type: DISPLAY_POLL
+        });
+        dispatch({
+          type: HASH_FINAL,
+          payload: values
+        });
+        dispatch({ type: LOADING_END });
       }
+    });
+    request.catch(err => {
+      dispatch({ type: LOGIN_FAIL, payload: err.response.data.error });
+      dispatch({ type: LOADING_END });
     });
   };
 }

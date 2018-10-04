@@ -10,15 +10,8 @@ const HeadStyle = {
 };
 
 class LoginPage extends Component {
-  state = {
-    loading: false
-  };
-
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      if (this.props.login.error === "Login has failed. Please try again") {
-        this.setState({ loading: false });
-      }
       if (this.props.login.page === "poll") {
         this.props.history.push("/poll");
       } else if (this.props.login.page === "admin") {
@@ -48,7 +41,6 @@ class LoginPage extends Component {
   }
 
   async onSubmit(values) {
-    await this.setState({ loading: true });
     this.props.loginAuth(values);
   }
 
@@ -75,18 +67,20 @@ class LoginPage extends Component {
               component={this.renderField}
             />
           </div>
+          <div className="helper_text_login">{this.props.login.error}</div>
           <button
             type="submit"
-            style={{ borderRadius: 20, width: 100, marginTop: 30 }}
-            className="btn btn-outline-dark btn-block"
-            disabled={this.state.loading}
+            style={{
+              marginTop: 10,
+              borderRadius: 20,
+              width: 100
+            }}
+            className="btn btn-outline-dark"
+            disabled={this.props.login.loading}
           >
             Login
           </button>
         </form>
-        <div className="helper_text_login_error">
-          {this.props.login.message}
-        </div>
       </div>
     );
   }

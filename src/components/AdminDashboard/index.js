@@ -7,7 +7,7 @@ import CandidateForm from "./Forms/CandidateForm";
 import CommitteeForm from "./Forms/CommitteForm";
 import CandidateList from "./DataLists/CandidateList";
 import CommitteeList from "./DataLists/CommitteeList";
-import VoteView from "./vote_view";
+import VoteView from "./ResultView";
 
 class AdminDashboard extends Component {
   render() {

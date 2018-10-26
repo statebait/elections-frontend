@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import Alert from "react-s-alert";
 //Component Imports
 import AdminNav from "./NavBar";
 import HmcForm from "./Forms/HmcForm";
@@ -8,6 +9,10 @@ import CommitteeForm from "./Forms/CommitteForm";
 import CandidateList from "./DataLists/CandidateList";
 import CommitteeList from "./DataLists/CommitteeList";
 import VoteView from "./ResultView";
+
+//Alert CSS
+import "react-s-alert/dist/s-alert-default.css";
+import "react-s-alert/dist/s-alert-css-effects/slide.css";
 
 class AdminDashboard extends Component {
   render() {
@@ -24,6 +29,7 @@ class AdminDashboard extends Component {
             <Route path="/admin/votes" component={VoteView} />
           </Switch>
         </div>
+        <Alert stack={{ limit: 3 }} position="bottom-right" />
       </div>
     );
   }

@@ -11,10 +11,10 @@ export default function(state = { token: "" }, action) {
   switch (action.type) {
     case ADMIN_LOGIN:
       console.log(action.payload);
-      return { ...state, token: action.payload.data.token };
-    case SEND_CANDIDATE:
-      console.log(action.payload.data.message);
+      localStorage.setItem("TOKEN", action.payload.data.token);
       return state;
+    case SEND_CANDIDATE:
+      return { ...state, message: action.payload.data.message };
     case SEND_COMMITTEE:
       console.log(action.payload.data.message);
       return state;

@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import BatchSelect from "../SelectOptions/BatchSelect";
+import Alert from "react-s-alert";
+import ReactLoading from "react-loading";
 import { sendCandidate } from "../../../store/actions/index";
 import { connect } from "react-redux";
 
 class CandidateForm extends Component {
+  state = { loading: false };
   renderField(field) {
     const {
       meta: { touched, error }
@@ -24,13 +27,46 @@ class CandidateForm extends Component {
     );
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      if (this.props.admin.message) {
+        this.setState({ loading: false });
+        Alert.success(this.props.admin.message);
+      }
+    }
+  }
+
   onSubmit(values) {
-    this.props.sendCandidate(values, this.props.admin.token);
-    console.log(values);
+    this.setState({ loading: true });
+    let finalValues;
+    let token = localStorage.getItem("TOKEN");
+    if (values.hmcFloor) {
+      finalValues = {
+        ...values,
+        comName: values.hmcFloor
+      };
+    } else {
+      finalValues = {
+        ...values
+      };
+    }
+    this.props.sendCandidate(finalValues, token);
   }
 
   render() {
     const { handleSubmit } = this.props;
+    let loading = "Submit";
+    if (this.state.loading) {
+      loading = (
+        <ReactLoading
+          type={"bars"}
+          color={"white"}
+          height={"30px"}
+          width={"30px"}
+        />
+      );
+    }
+
     return (
       <div className="admin_main_display">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -50,7 +86,7 @@ class CandidateForm extends Component {
           <CommitteeSelect />
           <Field
             label="HMC Floor"
-            name="comName"
+            name="hmcFloor"
             type="name"
             component={this.renderField}
           />
@@ -61,7 +97,7 @@ class CandidateForm extends Component {
             component={this.renderField}
           />
           <button type="submit" className="btn btn-primary">
-            Submit
+            {loading}
           </button>
         </form>
         <br />

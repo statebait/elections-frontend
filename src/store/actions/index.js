@@ -100,7 +100,7 @@ export function sendCandidate(values, token) {
     request.then(data => {
       dispatch({
         type: SEND_CANDIDATE,
-        payload: request
+        payload: data
       });
       dispatch(reset("candForm"));
     });

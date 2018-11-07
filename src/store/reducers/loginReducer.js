@@ -8,9 +8,12 @@ import {
   FINAL_SUBMIT,
   HASH_FINAL,
   OPEN_ADMIN,
+  VOTER_LOGIN,
   LOADING_START,
+  LOGOUT,
   LOADING_END
 } from "../actions";
+import auth from "../../utils/authChecker";
 
 let key = 0;
 let allCommittees = [];
@@ -49,14 +52,21 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, page: "poll" };
     case OPEN_ADMIN:
       return { ...state, page: "admin" };
+    case LOGOUT:
+      auth.logout();
+      localStorage.removeItem("TOKEN");
+      return { ...state, page: "" };
+    case VOTER_LOGIN:
+      const token = action.payload.data.token;
+      auth.authenticate(token);
+      localStorage.setItem("TOKEN", token);
+      return state;
     case HASH_FINAL:
-      console.log(action.payload.sid);
       return {
         ...state,
         sid: action.payload.sid
       };
     case STORE_POLL:
-      console.log("Store Poll :", action.payload.data);
       allCommittees = action.payload.data.list;
       return { ...state, token: action.payload.data.token };
     case DISPLAY_POLL:
@@ -78,8 +88,13 @@ export default function(state = INITIAL_STATE, action) {
         vote: vote
       };
     case FINAL_SUBMIT:
-      console.log(vote);
-      return state;
+      key = 0;
+      return {
+        ...state,
+        submitMessage: action.payload.data.message,
+        page: "",
+        finalState: false
+      };
     default:
       return state;
   }

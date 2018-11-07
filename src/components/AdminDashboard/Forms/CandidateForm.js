@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import CommitteeSelect from "../SelectOptions/CommitteeSelect";
-import BatchSelect from "../SelectOptions/BatchSelect";
+import CandidateBatchSelect from "../SelectOptions/CandidateBatchSelect";
 import Alert from "react-s-alert";
 import ReactLoading from "react-loading";
 import { sendCandidate } from "../../../store/actions/index";
@@ -82,7 +82,7 @@ class CandidateForm extends Component {
             type="number"
             component={this.renderField}
           />
-          <BatchSelect />
+          <CandidateBatchSelect />
           <CommitteeSelect />
           <Field
             label="HMC Floor"

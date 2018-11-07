@@ -5,7 +5,8 @@ import { fetchCandidates } from "../../../store/actions/index";
 
 class CandidateList extends Component {
   componentDidMount() {
-    this.props.fetchCandidates();
+    let token = localStorage.getItem("TOKEN");
+    this.props.fetchCandidates(token);
   }
 
   renderCandidates() {

@@ -10,12 +10,14 @@ import thunk from "redux-thunk";
 //Global CSS File
 import "./style/index.scss";
 
+//Private Routes
+import PrivateRoute from "./utils/PrivateRoute";
 
 //Reducer
 import reducers from "./store/reducers";
 
 //Create-React-App Import for faster loading
-import registerServiceWorker from "./registerServiceWorker";
+import * as serviceWorker from "./serviceWorker";
 
 //Component Imports
 import LoginPage from "./components/Login/";
@@ -28,8 +30,8 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <Switch>
-        <Route path="/admin" component={AdminDashboard} />
-        <Route path="/poll" component={PollMain} />
+        <PrivateRoute path="/admin" component={AdminDashboard} />
+        <PrivateRoute path="/poll" component={PollMain} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </BrowserRouter>
@@ -37,6 +39,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-registerServiceWorker();
-
-//qnnluuk4ez
+serviceWorker.register();

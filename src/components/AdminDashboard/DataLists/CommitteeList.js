@@ -5,7 +5,8 @@ import { fetchCommittees } from "../../../store/actions/index";
 
 class CommitteeList extends Component {
   componentDidMount() {
-    this.props.fetchCommittees();
+    let token = localStorage.getItem("TOKEN");
+    this.props.fetchCommittees(token);
   }
 
   renderCommittees() {
@@ -13,7 +14,7 @@ class CommitteeList extends Component {
       return (
         <tr key={committee._id}>
           <td>{committee.comName}</td>
-          <td>{committee.batch}</td>
+          <td>{committee.batches}</td>
           <td>
             {_.map(committee.candidates, candidates => {
               return `${candidates.name}, `;
@@ -46,4 +47,7 @@ function mapStateToProps(state) {
   return { admin: state.admin };
 }
 
-export default connect(mapStateToProps, { fetchCommittees })(CommitteeList);
+export default connect(
+  mapStateToProps,
+  { fetchCommittees }
+)(CommitteeList);

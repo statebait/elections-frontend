@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Field } from "redux-form";
 
-class BatchSelect extends Component {
+class CandidateBatchSelect extends Component {
   renderSelect(field) {
     const {
       meta: { touched, error }
@@ -41,4 +41,4 @@ class BatchSelect extends Component {
   }
 }
 
-export default BatchSelect;
+export default CandidateBatchSelect;

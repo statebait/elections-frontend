@@ -25,7 +25,8 @@ class HmcForm extends Component {
 
   onSubmit(values) {
     const data = { comName: values.comName, seats: 1, batch: "0000" };
-    this.props.sendCommittee(data, this.props.admin.token);
+    const token = localStorage.getItem("TOKEN");
+    this.props.sendCommittee(data, token);
   }
 
   render() {

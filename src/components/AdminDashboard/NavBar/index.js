@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AdminTopNav = () => {
+const AdminTopNav = props => {
   return (
     <nav className="navbar navbar-dark fixed-top">
       <span className="navbar-brand text-white col-sm-3 col-md-2">
@@ -9,9 +9,13 @@ const AdminTopNav = () => {
       </span>
       <ul className="navbar-nav px-3">
         <li className="nav-item text-nowrap">
-          <Link to="/" className="btn btn-outline-danger">
-            Sign Out
-          </Link>
+          <button
+            href="/"
+            className="btn btn-outline-danger"
+            onClick={props.logout}
+          >
+            Log Out
+          </button>
         </li>
       </ul>
     </nav>
@@ -48,7 +52,7 @@ const AdminSideNav = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/admin/vote_view" className="nav-link">
+          <Link to="/admin/results" className="nav-link">
             Votes
           </Link>
         </li>
@@ -57,10 +61,10 @@ const AdminSideNav = () => {
   );
 };
 
-const AdminNav = () => {
+const AdminNav = props => {
   return (
     <div>
-      <AdminTopNav />
+      <AdminTopNav logout={props.logout} />
       <AdminSideNav />
     </div>
   );

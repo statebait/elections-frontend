@@ -130,7 +130,7 @@ input[type="number"] {
   min-width: 250px;
   max-width: 250px;
   height: 100%;
-  background: #2b2b2b !important;
+  background: #343a40 !important;
 }
 
 .sidebar-vote {
@@ -218,4 +218,8 @@ input[type="number"] {
   padding: 10px;
   font-size: 14px;
   color: red;
+}
+
+.batch-select {
+  width: 500px !important;
 }

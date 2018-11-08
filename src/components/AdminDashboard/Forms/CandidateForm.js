@@ -3,12 +3,13 @@ import { Field, reduxForm } from "redux-form";
 import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import CandidateBatchSelect from "../SelectOptions/CandidateBatchSelect";
 import Alert from "react-s-alert";
-import ReactLoading from "react-loading";
 import { sendCandidate } from "../../../store/actions/index";
 import { connect } from "react-redux";
+import Button from "../../UI/Button";
 
 class CandidateForm extends Component {
   state = { loading: false };
+
   renderField(field) {
     const {
       meta: { touched, error }
@@ -29,9 +30,9 @@ class CandidateForm extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      if (this.props.admin.message) {
+      if (this.props.admin.message && this.state.loading) {
         this.setState({ loading: false });
-        Alert.success(this.props.admin.message);
+        Alert.info(this.props.admin.message);
       }
     }
   }
@@ -55,18 +56,6 @@ class CandidateForm extends Component {
 
   render() {
     const { handleSubmit } = this.props;
-    let loading = "Submit";
-    if (this.state.loading) {
-      loading = (
-        <ReactLoading
-          type={"bars"}
-          color={"white"}
-          height={"30px"}
-          width={"30px"}
-        />
-      );
-    }
-
     return (
       <div className="admin_main_display">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -96,9 +85,12 @@ class CandidateForm extends Component {
             type="number"
             component={this.renderField}
           />
-          <button type="submit" className="btn btn-primary">
-            {loading}
-          </button>
+          <Button
+            loading={this.state.loading}
+            text={"Submit"}
+            type={"submit"}
+            styleClass="btn btn-primary"
+          />
         </form>
         <br />
       </div>

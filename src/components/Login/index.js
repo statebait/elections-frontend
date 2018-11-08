@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { loginAuth } from "../../store/actions/index";
+import Button from "../UI/Button";
 
 const HeadStyle = {
   paddingTop: "80px",
@@ -68,18 +69,13 @@ class LoginPage extends Component {
             />
           </div>
           <div className="helper_text_login">{this.props.login.error}</div>
-          <button
+          <Button
             type="submit"
-            style={{
-              marginTop: 10,
-              borderRadius: 20,
-              width: 100
-            }}
-            className="btn btn-outline-dark"
-            disabled={this.props.login.loading}
-          >
-            Login
-          </button>
+            styleClass="btn btn-outline-dark login-button"
+            loading={this.props.login.loading}
+            text="Log In"
+            color="#343A40"
+          />
         </form>
       </div>
     );

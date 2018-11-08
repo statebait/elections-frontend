@@ -11,6 +11,8 @@ class CandidateList extends Component {
 
   renderCandidates() {
     return _.map(this.props.admin, candidate => {
+      console.log(candidate);
+
       return (
         <tr key={candidate._id}>
           <td>{candidate.name}</td>
@@ -45,4 +47,7 @@ function mapStateToProps(state) {
   return { admin: state.admin };
 }
 
-export default connect(mapStateToProps, { fetchCandidates })(CandidateList);
+export default connect(
+  mapStateToProps,
+  { fetchCandidates }
+)(CandidateList);

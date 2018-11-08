@@ -14,9 +14,9 @@ class CommitteeForm extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      if (this.props.admin.message) {
+      if (this.props.admin.message && this.state.loading) {
         this.setState({ loading: false });
-        Alert.success(this.props.admin.message);
+        Alert.info(this.props.admin.message);
       }
     }
   }

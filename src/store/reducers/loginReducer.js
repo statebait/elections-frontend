@@ -68,7 +68,7 @@ export default function(state = INITIAL_STATE, action) {
       };
     case STORE_POLL:
       allCommittees = action.payload.data.list;
-      return { ...state, token: action.payload.data.token };
+      return { ...state, token: action.payload.data.token, submitMessage: "" };
     case DISPLAY_POLL:
       if (allCommittees[key] != null) {
         return { ...state, committee: allCommittees[key], all: allCommittees };

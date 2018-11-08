@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Alert from "react-s-alert";
 import PollSideNav from "./PollNav";
 import PollView from "./PollView";
 
@@ -12,7 +11,6 @@ class PollMain extends Component {
       <div>
         <PollSideNav />
         <PollView logout={this.logOut} />
-        <Alert stack={{ limit: 3 }} position="top-right" />
       </div>
     );
   }

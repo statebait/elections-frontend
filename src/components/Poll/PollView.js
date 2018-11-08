@@ -4,8 +4,12 @@ import { connect } from "react-redux";
 import { nextPoll, voteStore, finalSubmit } from "../../store/actions/";
 import _ from "lodash";
 import { isEmpty } from "../../utils/utilityFunctions";
+import Button from "../UI/Button";
 
 class PollView extends Component {
+  state = {
+    loading: false
+  };
   renderField(field) {
     let optionArray = [];
     let n = 0;
@@ -84,12 +88,15 @@ class PollView extends Component {
     if (prevProps !== this.props) {
       if (this.props.login.submitMessage === "Vote Successfully Submitted") {
         localStorage.removeItem("TOKEN");
+        this.setState({ loading: false });
         this.props.logout();
+        window.alert(this.props.login.submitMessage);
       }
     }
   }
 
   voteSubmit() {
+    this.setState({ loading: true });
     const finalPacket = {
       sid: this.props.login.sid,
       voteList: this.props.login.vote
@@ -102,12 +109,13 @@ class PollView extends Component {
     if (this.props.login.finalState === true) {
       return (
         <div className="submit_vote">
-          <button
-            className="btn btn-outline-dark btn-lg"
+          <Button
+            loading={this.state.loading}
+            color="#343A40"
+            text="Submit Vote"
+            styleClass="btn btn-outline-dark btn-lg"
             onClick={this.voteSubmit.bind(this)}
-          >
-            Submit Vote
-          </button>
+          />
         </div>
       );
     } else {

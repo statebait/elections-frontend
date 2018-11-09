@@ -4,21 +4,43 @@ import * as actions from "./actions";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 
-export function loginAuth(values) {
+export function checkAuth() {
+  const token = sessionStorage.getItem("TOKEN");
+  const request = axios({
+    method: "get",
+    url: `${API_URL}verifytoken`,
+    headers: { "x-access-token": token }
+  });
+  return dispatch => {
+    request
+      .then(data => {
+        dispatch({
+          type: actions.CHECK_AUTH,
+          payload: "Success"
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: actions.CHECK_AUTH,
+          payload: "Failed"
+        });
+      });
+  };
+}
+
+export function logIn(values) {
   const request = axios.post(`${API_URL}login`, values);
+
   return dispatch => {
     dispatch({
-      type: actions.LOADING_START
+      type: actions.LOGIN_START
     });
     request
       .then(data => {
         if (data.data.admin === true) {
-          dispatch({ type: actions.ADMIN_LOGIN, payload: data });
-          dispatch({ type: actions.OPEN_ADMIN });
-          dispatch({ type: actions.LOADING_END });
+          dispatch({ type: actions.ADMIN_LOGIN, payload: data.data });
         } else {
-          dispatch({ type: actions.VOTER_LOGIN, payload: data });
-          dispatch({ type: actions.OPEN_POLL });
+          dispatch({ type: actions.VOTER_LOGIN, payload: data.data });
           dispatch({
             type: actions.STORE_POLL,
             payload: data
@@ -27,15 +49,13 @@ export function loginAuth(values) {
             type: actions.DISPLAY_POLL
           });
           dispatch({
-            type: actions.HASH_FINAL,
+            type: actions.ASYNC_STORE,
             payload: values
           });
-          dispatch({ type: actions.LOADING_END });
         }
       })
       .catch(err => {
         dispatch({ type: actions.LOGIN_FAIL, payload: err.response.data });
-        dispatch({ type: actions.LOADING_END });
       });
   };
 }
@@ -48,13 +68,6 @@ export function logOut() {
   };
 }
 
-export function nextPoll() {
-  return dispatch => {
-    dispatch({ type: actions.NEXT_POLL });
-    dispatch({ type: actions.DISPLAY_POLL });
-  };
-}
-
 export function voteStore(voteDetail) {
   return dispatch => {
     dispatch({
@@ -62,6 +75,7 @@ export function voteStore(voteDetail) {
       payload: voteDetail
     });
     dispatch(reset("votepoll"));
+    dispatch({ type: actions.DISPLAY_POLL });
   };
 }
 
@@ -76,7 +90,7 @@ export function finalSubmit(vote, token) {
     request.then(data => {
       dispatch({
         type: actions.FINAL_SUBMIT,
-        payload: data
+        payload: data.data
       });
     });
   };

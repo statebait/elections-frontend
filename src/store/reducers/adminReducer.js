@@ -5,11 +5,9 @@ import {
   SEND_COMMITTEE_END,
   FETCH_CANDIDATES,
   FETCH_COMMITTEES,
-  ADMIN_LOGIN,
   GET_RESULT
 } from "../actions/actions";
 import _ from "lodash";
-import auth from "../../utils/authChecker";
 
 export default function(
   state = {
@@ -24,11 +22,6 @@ export default function(
   action
 ) {
   switch (action.type) {
-    case ADMIN_LOGIN:
-      const token = action.payload.data.token;
-      auth.authenticate(token);
-      localStorage.setItem("TOKEN", token);
-      return state;
     case SEND_CANDIDATE_START:
       return { ...state, candidate: { message: "" } };
     case SEND_CANDIDATE_END:

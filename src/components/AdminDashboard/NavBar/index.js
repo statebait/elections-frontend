@@ -53,7 +53,7 @@ const AdminSideNav = () => {
         </li>
         <li className="nav-item">
           <Link to="/admin/results" className="nav-link">
-            Votes
+            Results
           </Link>
         </li>
       </ul>

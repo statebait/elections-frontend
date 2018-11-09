@@ -1,60 +1,41 @@
 import axios from "axios";
 import { reset } from "redux-form";
+import * as actions from "./actions";
 
-export const OPEN_POLL = "open_poll";
-export const OPEN_ADMIN = "open_admin";
-export const LOGIN_FAIL = "login_fail";
-export const SEND_CANDIDATE_START = "send_candidate_start";
-export const SEND_CANDIDATE_END = "send_candidate_end";
-export const SEND_COMMITTEE_START = "send_committee_start";
-export const SEND_COMMITTEE_END = "send_committee_end";
-export const FETCH_CANDIDATES = "fetch_candidates";
-export const FETCH_COMMITTEES = "fetch_committees";
-export const DISPLAY_POLL = "display_poll";
-export const HASH_FINAL = "hash_final";
-export const NEXT_POLL = "next_poll";
-export const STORE_POLL = "store_poll";
-export const VOTE_STORE = "vote_store";
-export const FINAL_SUBMIT = "final_submit";
-export const ADMIN_LOGIN = "admin_login";
-export const GET_RESULT = "get_result";
-export const VOTER_LOGIN = "voter_login";
-export const LOGOUT = "logout";
-export const LOADING_START = "loading_start";
-export const LOADING_END = "loading_end";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 
 export function loginAuth(values) {
-  const request = axios.post(`${process.env.REACT_APP_ROOT_URL}login`, values);
+  const request = axios.post(`${API_URL}login`, values);
   return dispatch => {
     dispatch({
-      type: LOADING_START
+      type: actions.LOADING_START
     });
     request
       .then(data => {
         if (data.data.admin === true) {
-          dispatch({ type: ADMIN_LOGIN, payload: data });
-          dispatch({ type: OPEN_ADMIN });
-          dispatch({ type: LOADING_END });
+          dispatch({ type: actions.ADMIN_LOGIN, payload: data });
+          dispatch({ type: actions.OPEN_ADMIN });
+          dispatch({ type: actions.LOADING_END });
         } else {
-          dispatch({ type: VOTER_LOGIN, payload: data });
-          dispatch({ type: OPEN_POLL });
+          dispatch({ type: actions.VOTER_LOGIN, payload: data });
+          dispatch({ type: actions.OPEN_POLL });
           dispatch({
-            type: STORE_POLL,
+            type: actions.STORE_POLL,
             payload: data
           });
           dispatch({
-            type: DISPLAY_POLL
+            type: actions.DISPLAY_POLL
           });
           dispatch({
-            type: HASH_FINAL,
+            type: actions.HASH_FINAL,
             payload: values
           });
-          dispatch({ type: LOADING_END });
+          dispatch({ type: actions.LOADING_END });
         }
       })
       .catch(err => {
-        dispatch({ type: LOGIN_FAIL, payload: err.response.data });
-        dispatch({ type: LOADING_END });
+        dispatch({ type: actions.LOGIN_FAIL, payload: err.response.data });
+        dispatch({ type: actions.LOADING_END });
       });
   };
 }
@@ -62,22 +43,22 @@ export function loginAuth(values) {
 export function logOut() {
   return dispatch => {
     dispatch({
-      type: LOGOUT
+      type: actions.LOGOUT
     });
   };
 }
 
 export function nextPoll() {
   return dispatch => {
-    dispatch({ type: NEXT_POLL });
-    dispatch({ type: DISPLAY_POLL });
+    dispatch({ type: actions.NEXT_POLL });
+    dispatch({ type: actions.DISPLAY_POLL });
   };
 }
 
 export function voteStore(voteDetail) {
   return dispatch => {
     dispatch({
-      type: VOTE_STORE,
+      type: actions.VOTE_STORE,
       payload: voteDetail
     });
     dispatch(reset("votepoll"));
@@ -87,14 +68,14 @@ export function voteStore(voteDetail) {
 export function finalSubmit(vote, token) {
   const request = axios({
     method: "post",
-    url: `${process.env.REACT_APP_ROOT_URL}vote`,
+    url: `${API_URL}vote`,
     data: vote,
     headers: { "x-access-token": token }
   });
   return dispatch => {
     request.then(data => {
       dispatch({
-        type: FINAL_SUBMIT,
+        type: actions.FINAL_SUBMIT,
         payload: data
       });
     });
@@ -104,26 +85,26 @@ export function finalSubmit(vote, token) {
 export function sendCandidate(values, token) {
   const request = axios({
     method: "post",
-    url: `${process.env.REACT_APP_ROOT_URL}candidate`,
+    url: `${API_URL}candidate`,
     data: values,
     headers: { "x-access-token": token }
   });
   return dispatch => {
     dispatch({
-      type: SEND_CANDIDATE_START
+      type: actions.SEND_CANDIDATE_START
     });
     request
       .then(data => {
         dispatch({
-          type: SEND_CANDIDATE_END,
-          payload: data
+          type: actions.SEND_CANDIDATE_END,
+          payload: data.data
         });
         dispatch(reset("candForm"));
       })
       .catch(err => {
         dispatch({
-          type: SEND_CANDIDATE_END,
-          payload: { data: { message: err.response.data } }
+          type: actions.SEND_CANDIDATE_END,
+          payload: err.response.data
         });
       });
   };
@@ -132,26 +113,26 @@ export function sendCandidate(values, token) {
 export function sendCommittee(values, token) {
   const request = axios({
     method: "post",
-    url: `${process.env.REACT_APP_ROOT_URL}committee`,
+    url: `${API_URL}committee`,
     data: values,
     headers: { "x-access-token": token }
   });
   return dispatch => {
     dispatch({
-      type: SEND_COMMITTEE_START
+      type: actions.SEND_COMMITTEE_START
     });
     request
       .then(data => {
         dispatch({
-          type: SEND_COMMITTEE_END,
-          payload: data
+          type: actions.SEND_COMMITTEE_END,
+          payload: data.data
         });
         dispatch(reset("commForm"));
       })
       .catch(err => {
         dispatch({
-          type: SEND_COMMITTEE_END,
-          payload: { data: { message: err.response.data } }
+          type: actions.SEND_COMMITTEE_END,
+          payload: err.response.data
         });
       });
   };
@@ -161,13 +142,13 @@ export function fetchCandidates(token) {
   const request = axios({
     method: "get",
     headers: { "x-access-token": token },
-    url: `${process.env.REACT_APP_ROOT_URL}candidate`
+    url: `${API_URL}candidate`
   });
 
   return dispatch => {
     request.then(data => {
       dispatch({
-        type: FETCH_CANDIDATES,
+        type: actions.FETCH_CANDIDATES,
         payload: data
       });
     });
@@ -178,13 +159,13 @@ export function fetchCommittees(token) {
   const request = axios({
     method: "get",
     headers: { "x-access-token": token },
-    url: `${process.env.REACT_APP_ROOT_URL}committee`
+    url: `${API_URL}committee`
   });
 
   return dispatch => {
     request.then(data => {
       dispatch({
-        type: FETCH_COMMITTEES,
+        type: actions.FETCH_COMMITTEES,
         payload: data
       });
     });
@@ -195,13 +176,13 @@ export function getResult(token) {
   const request = axios({
     method: "get",
     headers: { "x-access-token": token },
-    url: `${process.env.REACT_APP_ROOT_URL}result`
+    url: `${API_URL}result`
   });
 
   return dispatch => {
     request.then(data => {
       dispatch({
-        type: GET_RESULT,
+        type: actions.GET_RESULT,
         payload: data
       });
     });

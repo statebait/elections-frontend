@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { Field } from "redux-form";
 import Select from "react-select";
-
-const batches = [
-  { value: 1701, label: "BTech 2017" },
-  { value: 1601, label: "BTech 2016" },
-  { value: 1501, label: "BTech 2015" },
-  { value: 1711, label: "MTech 2017" },
-  { value: 1712, label: "MscIT/Mdes 2017" },
-  { value: 1711, label: "PHD 2017" }
-];
+import { batches } from "../../../data";
 
 class CommitteeBatchSelect extends Component {
   renderSelect(field) {

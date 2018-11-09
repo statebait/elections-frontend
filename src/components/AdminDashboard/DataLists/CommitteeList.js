@@ -14,7 +14,11 @@ class CommitteeList extends Component {
       return (
         <tr key={committee._id}>
           <td>{committee.comName}</td>
-          <td>{committee.batches}</td>
+          <td>
+            {_.map(committee.batches, batch => {
+              return `${batch}, `;
+            })}
+          </td>
           <td>
             {_.map(committee.candidates, candidates => {
               return `${candidates.name}, `;

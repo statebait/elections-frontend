@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Field } from "redux-form";
+import { batches } from "../../../data";
 
 class CandidateBatchSelect extends Component {
   renderSelect(field) {
@@ -16,13 +17,9 @@ class CandidateBatchSelect extends Component {
           {...field.input}
         >
           <option value="">No Batch Selected</option>
-          <option value="1701">BTech 2017</option>
-          <option value="1601">BTech 2016</option>
-          <option value="1501">BTech 2015</option>
-          <option value="1711">MTech 2017</option>
-          <option value="1712">MSc.IT 2017</option>
-          <option value="1712">MDes 2017</option>
-          <option value="1711">PHD</option>
+          {batches.map(item => {
+            return <option value={item.value}>{item.label}</option>;
+          })}
         </select>
         <div className="helper_text">{touched ? error : ""}</div>
       </div>

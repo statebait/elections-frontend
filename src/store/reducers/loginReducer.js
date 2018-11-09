@@ -12,7 +12,7 @@ import {
   LOADING_START,
   LOGOUT,
   LOADING_END
-} from "../actions";
+} from "../actions/actions";
 import auth from "../../utils/authChecker";
 
 let key = 0;

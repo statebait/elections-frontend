@@ -11,8 +11,6 @@ class CandidateList extends Component {
 
   renderCandidates() {
     return _.map(this.props.admin, candidate => {
-      console.log(candidate);
-
       return (
         <tr key={candidate._id}>
           <td>{candidate.name}</td>

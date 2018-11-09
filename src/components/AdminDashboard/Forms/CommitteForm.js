@@ -14,9 +14,9 @@ class CommitteeForm extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      if (this.props.admin.message && this.state.loading) {
+      if (this.props.message && this.state.loading) {
         this.setState({ loading: false });
-        Alert.info(this.props.admin.message);
+        Alert.info(this.props.message);
       }
     }
   }
@@ -114,7 +114,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { admin: state.admin };
+  return { message: state.admin.committee.message };
 }
 
 export default reduxForm({ validate, form: "commForm" })(

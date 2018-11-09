@@ -1,9 +1,7 @@
 # elections-frontend
 
-Elections Web App built on ReactJS for the STV system of voting. Link to the backend repo - https://github.com/gauravsofat/elections-api
+Web App for the DA-IICT Elections built on ReactJS for the STV system of voting. Link to the backend repo - https://github.com/gauravsofat/elections-api
 
-  qnnluuk4ez
-id7b6qux95
 ## To run the app
 
 - You need Node to run this application. Download it [here](https://nodejs.org/).

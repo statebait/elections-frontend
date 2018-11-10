@@ -7,20 +7,21 @@ import {
   FETCH_COMMITTEES,
   GET_RESULT
 } from "../actions/actions";
-import _ from "lodash";
 
-export default function(
-  state = {
-    token: "",
-    candidate: {
-      message: ""
-    },
-    committee: {
-      message: ""
-    }
+const INITIAL_STATE = {
+  token: "",
+  candidate: {
+    message: "",
+    list: []
   },
-  action
-) {
+  committee: {
+    message: "",
+    list: []
+  },
+  results: []
+};
+
+export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SEND_CANDIDATE_START:
       return { ...state, candidate: { message: "" } };
@@ -31,9 +32,9 @@ export default function(
     case SEND_COMMITTEE_END:
       return { ...state, committee: { message: action.payload } };
     case FETCH_CANDIDATES:
-      return _.mapKeys(action.payload.data, "sid");
+      return { ...state, candidate: { list: action.payload.data } };
     case FETCH_COMMITTEES:
-      return _.mapKeys(action.payload.data, "_id");
+      return { ...state, committee: { list: action.payload.data } };
     case GET_RESULT:
       return { ...state, results: action.payload.data.allResults };
     default:

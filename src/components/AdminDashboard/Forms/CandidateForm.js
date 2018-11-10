@@ -10,6 +10,15 @@ import Button from "../../UI/Button";
 class CandidateForm extends Component {
   state = { loading: false };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      if (this.props.message && this.state.loading) {
+        this.setState({ loading: false });
+        Alert.info(this.props.message);
+      }
+    }
+  }
+
   renderField(field) {
     const {
       meta: { touched, error }
@@ -28,19 +37,9 @@ class CandidateForm extends Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      if (this.props.message && this.state.loading) {
-        this.setState({ loading: false });
-        Alert.info(this.props.message);
-      }
-    }
-  }
-
   onSubmit(values) {
     this.setState({ loading: true });
     let finalValues;
-    let token = localStorage.getItem("TOKEN");
     if (values.hmcFloor) {
       finalValues = {
         ...values,
@@ -51,7 +50,7 @@ class CandidateForm extends Component {
         ...values
       };
     }
-    this.props.sendCandidate(finalValues, token);
+    this.props.sendCandidate(finalValues, this.props.token);
   }
 
   render() {
@@ -129,7 +128,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { message: state.admin.candidate.message };
+  return { message: state.admin.candidate.message, token: state.auth.token };
 }
 
 export default reduxForm({ validate, form: "candForm" })(

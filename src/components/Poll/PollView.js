@@ -14,10 +14,9 @@ class PollView extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       if (this.props.poll.submitMessage === "Vote Successfully Submitted") {
-        localStorage.removeItem("TOKEN");
         this.setState({ loading: false });
-        this.props.logOut();
         window.alert(this.props.poll.submitMessage);
+        this.props.logOut();
       }
     }
   }

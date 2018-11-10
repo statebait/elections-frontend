@@ -5,12 +5,11 @@ import { fetchCandidates } from "../../../store/actions/index";
 
 class CandidateList extends Component {
   componentDidMount() {
-    let token = localStorage.getItem("TOKEN");
-    this.props.fetchCandidates(token);
+    this.props.fetchCandidates(this.props.token);
   }
 
   renderCandidates() {
-    return _.map(this.props.admin, candidate => {
+    return _.map(this.props.candidates, candidate => {
       return (
         <tr key={candidate._id}>
           <td>{candidate.name}</td>
@@ -42,7 +41,7 @@ class CandidateList extends Component {
 }
 
 function mapStateToProps(state) {
-  return { admin: state.admin };
+  return { candidates: state.admin.candidate.list, token: state.auth.token };
 }
 
 export default connect(

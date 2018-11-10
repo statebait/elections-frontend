@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getResult } from "../../store/actions";
+import { getResult } from "../../../store/actions";
 import ResultCard from "./ResultCard";
-import Button from "../UI/Button";
+import Button from "../../UI/Button";
 
-class VoteView extends Component {
+class ResultsView extends Component {
   state = {
     show: false
   };
 
   componentDidMount() {
-    let token = localStorage.getItem("TOKEN");
-    this.props.getResult(token);
+    this.props.getResult(this.props.token);
   }
 
   renderVotes() {
@@ -54,11 +53,12 @@ class VoteView extends Component {
 
 function mapStateToProps(state) {
   return {
-    admin: state.admin
+    admin: state.admin,
+    token: state.auth.token
   };
 }
 
 export default connect(
   mapStateToProps,
   { getResult }
-)(VoteView);
+)(ResultsView);

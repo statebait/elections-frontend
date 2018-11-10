@@ -2,8 +2,23 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { sendCommittee } from "../../../store/actions/index";
 import { connect } from "react-redux";
+import Alert from "react-s-alert";
+import Button from "../../UI/Button";
 
 class HmcForm extends Component {
+  state = {
+    loading: false
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      if (this.props.message && this.state.loading) {
+        this.setState({ loading: false });
+        Alert.info(this.props.message);
+      }
+    }
+  }
+
   renderField(field) {
     const {
       meta: { touched, error }
@@ -24,9 +39,9 @@ class HmcForm extends Component {
   }
 
   onSubmit(values) {
+    this.setState({ loading: true });
     const data = { comName: values.comName, seats: 1, batch: "0000" };
-    const token = localStorage.getItem("TOKEN");
-    this.props.sendCommittee(data, token);
+    this.props.sendCommittee(data, this.props.token);
   }
 
   render() {
@@ -40,9 +55,12 @@ class HmcForm extends Component {
             type="name"
             component={this.renderField}
           />
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <Button
+            text={"Submit"}
+            type={"submit"}
+            styleClass="btn btn-primary"
+            loading={this.state.loading}
+          />
         </form>
       </div>
     );
@@ -60,7 +78,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { admin: state.admin };
+  return { message: state.admin.committee.message, token: state.auth.token };
 }
 
 export default reduxForm({ validate, form: "HmcForm" })(

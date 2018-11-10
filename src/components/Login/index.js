@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { loginAuth } from "../../store/actions/index";
+import { logIn, checkAuth } from "../../store/actions/index";
 import Button from "../UI/Button";
 
 const HeadStyle = {
@@ -11,14 +12,8 @@ const HeadStyle = {
 };
 
 class LoginPage extends Component {
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      if (this.props.login.page === "poll") {
-        this.props.history.push("/poll");
-      } else if (this.props.login.page === "admin") {
-        this.props.history.push("/admin");
-      }
-    }
+  componentDidMount() {
+    this.props.checkAuth();
   }
 
   renderField(field) {
@@ -41,44 +36,51 @@ class LoginPage extends Component {
     );
   }
 
-  async onSubmit(values) {
-    this.props.loginAuth(values);
+  onSubmit(values) {
+    this.props.logIn(values);
   }
 
   render() {
     const { handleSubmit } = this.props;
-    return (
-      <div className="login-wrapper">
-        <div style={HeadStyle}>
-          <p>DA-IICT Elections</p>
-        </div>
-
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <div>
-            <Field
-              name="sid"
-              label="Student ID:"
-              type="number"
-              component={this.renderField}
-            />
-            <Field
-              name="pwd"
-              label="Password:"
-              type="password"
-              component={this.renderField}
-            />
+    if (this.props.isAuthenticated) {
+      if (this.props.isAdmin) {
+        return <Redirect to="/admin" />;
+      } else {
+        return <Redirect to="/poll" />;
+      }
+    } else {
+      return (
+        <div className="login-wrapper">
+          <div style={HeadStyle}>
+            <p>DA-IICT Elections</p>
           </div>
-          <div className="helper_text_login">{this.props.login.error}</div>
-          <Button
-            type="submit"
-            styleClass="btn btn-outline-dark login-button"
-            loading={this.props.login.loading}
-            text="Log In"
-            color="#343A40"
-          />
-        </form>
-      </div>
-    );
+          <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+            <div>
+              <Field
+                name="sid"
+                label="Student ID:"
+                type="number"
+                component={this.renderField}
+              />
+              <Field
+                name="pwd"
+                label="Password:"
+                type="password"
+                component={this.renderField}
+              />
+            </div>
+            <div className="helper_text_login">{this.props.error}</div>
+            <Button
+              type="submit"
+              styleClass="btn btn-outline-dark login-button"
+              loading={this.props.loading}
+              text="Log In"
+              color="#343A40"
+            />
+          </form>
+        </div>
+      );
+    }
   }
 }
 
@@ -103,12 +105,18 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { login: state.login };
+  return {
+    loading: state.auth.loading,
+    isAuthenticated: state.auth.isAuthenticated,
+    isAdmin: state.auth.isAdmin,
+    message: state.auth.message,
+    error: state.auth.error.message
+  };
 }
 
 export default reduxForm({ validate, form: "login" })(
   connect(
     mapStateToProps,
-    { loginAuth }
+    { logIn, checkAuth }
   )(LoginPage)
 );

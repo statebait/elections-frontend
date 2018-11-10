@@ -5,30 +5,24 @@ import {
   SEND_COMMITTEE_END,
   FETCH_CANDIDATES,
   FETCH_COMMITTEES,
-  ADMIN_LOGIN,
   GET_RESULT
 } from "../actions/actions";
-import _ from "lodash";
-import auth from "../../utils/authChecker";
 
-export default function(
-  state = {
-    token: "",
-    candidate: {
-      message: ""
-    },
-    committee: {
-      message: ""
-    }
+const INITIAL_STATE = {
+  token: "",
+  candidate: {
+    message: "",
+    list: []
   },
-  action
-) {
+  committee: {
+    message: "",
+    list: []
+  },
+  results: []
+};
+
+export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADMIN_LOGIN:
-      const token = action.payload.data.token;
-      auth.authenticate(token);
-      localStorage.setItem("TOKEN", token);
-      return state;
     case SEND_CANDIDATE_START:
       return { ...state, candidate: { message: "" } };
     case SEND_CANDIDATE_END:
@@ -38,9 +32,9 @@ export default function(
     case SEND_COMMITTEE_END:
       return { ...state, committee: { message: action.payload } };
     case FETCH_CANDIDATES:
-      return _.mapKeys(action.payload.data, "sid");
+      return { ...state, candidate: { list: action.payload.data } };
     case FETCH_COMMITTEES:
-      return _.mapKeys(action.payload.data, "_id");
+      return { ...state, committee: { list: action.payload.data } };
     case GET_RESULT:
       return { ...state, results: action.payload.data.allResults };
     default:

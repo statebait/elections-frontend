@@ -4,7 +4,7 @@ import _ from "lodash";
 
 class PollSideNav extends Component {
   renderNavItems() {
-    return _.map(this.props.login.all, comName => {
+    return _.map(this.props.poll.allCommittees, comName => {
       return (
         <li className="nav-item committee_names" key={comName._id}>
           {comName.comName}
@@ -23,7 +23,7 @@ class PollSideNav extends Component {
 }
 
 function mapStateToProps(state) {
-  return { login: state.login };
+  return { poll: state.poll };
 }
 
 export default connect(mapStateToProps)(PollSideNav);

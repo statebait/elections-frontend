@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { nextPoll, voteStore, finalSubmit } from "../../store/actions/";
+import { voteStore, finalSubmit, logOut } from "../../store/actions/";
 import _ from "lodash";
 import { isEmpty } from "../../utils/utilityFunctions";
 import Button from "../UI/Button";
@@ -10,10 +10,21 @@ class PollView extends Component {
   state = {
     loading: false
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      if (this.props.poll.submitMessage === "Vote Successfully Submitted") {
+        this.setState({ loading: false });
+        window.alert(this.props.poll.submitMessage);
+        this.props.logOut();
+      }
+    }
+  }
+
   renderField(field) {
     let optionArray = [];
     let n = 0;
-    _.map(this.props.login.committee.candidates, candidate => {
+    _.map(this.props.poll.currentCommittee.candidates, candidate => {
       n++;
       optionArray.push(
         <option key={n} value={`${candidate.sid}`}>
@@ -40,8 +51,8 @@ class PollView extends Component {
   renderFields = () => {
     let prefArray = [],
       prefs =
-        this.props.login.committee.candidates.length -
-        this.props.login.committee.seats -
+        this.props.poll.currentCommittee.candidates.length -
+        this.props.poll.currentCommittee.seats -
         1;
     if (prefs >= 6) {
       prefs = 6;
@@ -71,42 +82,30 @@ class PollView extends Component {
           }
         }
       }
-      const batch = this.props.login.sid.slice(2, 6);
+      const batch = this.props.poll.sid.slice(2, 6);
       const voteDetail = {
-        comName: this.props.login.committee.comName,
+        comName: this.props.poll.currentCommittee.comName,
         batch: batch,
         prefs: newArray
       };
       this.props.voteStore(voteDetail);
-      this.props.nextPoll();
     } else {
       window.alert("Please select atleast one candidate");
     }
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      if (this.props.login.submitMessage === "Vote Successfully Submitted") {
-        localStorage.removeItem("TOKEN");
-        this.setState({ loading: false });
-        this.props.logout();
-        window.alert(this.props.login.submitMessage);
-      }
-    }
-  }
-
   voteSubmit() {
     this.setState({ loading: true });
     const finalPacket = {
-      sid: this.props.login.sid,
-      voteList: this.props.login.vote
+      sid: this.props.poll.sid,
+      voteList: this.props.poll.vote
     };
-    this.props.finalSubmit(finalPacket, this.props.login.token);
+    this.props.finalSubmit(finalPacket, this.props.token);
   }
 
   render() {
     const { handleSubmit } = this.props;
-    if (this.props.login.finalState === true) {
+    if (this.props.poll.finalState === true) {
       return (
         <div className="submit_vote">
           <Button
@@ -122,11 +121,13 @@ class PollView extends Component {
       return (
         <div>
           <div className="jumbotron">
-            <h1 className="display-4">{this.props.login.committee.comName}</h1>
+            <h1 className="display-4">
+              {this.props.poll.currentCommittee.comName}
+            </h1>
           </div>
           <div className="poll_candidate">
             <form onSubmit={handleSubmit(this.onSubmit)}>
-              {_.get(this.props.login.committee, "candidates") &&
+              {_.get(this.props.poll.currentCommittee, "candidates") &&
                 this.renderFields()}
               <div className="btn_placement">
                 <button className="btn btn-outline-dark btn-lg">Next</button>
@@ -160,12 +161,12 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { login: state.login };
+  return { poll: state.poll, token: state.auth.token };
 }
 
 export default reduxForm({ validate, form: "votepoll" })(
   connect(
     mapStateToProps,
-    { nextPoll, voteStore, finalSubmit }
+    { voteStore, finalSubmit, logOut }
   )(PollView)
 );

@@ -4,8 +4,8 @@ import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import CommitteeBatchSelect from "../SelectOptions/CommitteeBatchSelect";
 import { sendCommittee } from "../../../store/actions/index";
 import { connect } from "react-redux";
-import ReactLoading from "react-loading";
 import Alert from "react-s-alert";
+import Button from "../../UI/Button";
 
 class CommitteeForm extends Component {
   state = {
@@ -41,7 +41,6 @@ class CommitteeForm extends Component {
   }
 
   async onSubmit(values) {
-    let token = localStorage.getItem("TOKEN");
     let temp = [];
     this.setState({ loading: true });
     await values.batches.map(item => {
@@ -52,23 +51,11 @@ class CommitteeForm extends Component {
       batches: temp,
       seats: values.seats
     };
-    this.props.sendCommittee(finalValues, token);
+    this.props.sendCommittee(finalValues, this.props.token);
   }
 
   render() {
     const { handleSubmit } = this.props;
-    let loading = "Submit";
-    if (this.state.loading) {
-      loading = (
-        <ReactLoading
-          type={"bars"}
-          color={"white"}
-          height={"30px"}
-          width={"30px"}
-        />
-      );
-    }
-
     return (
       <div className="admin_main_display">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -80,13 +67,12 @@ class CommitteeForm extends Component {
             type="number"
             component={this.renderField}
           />
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={this.state.loading}
-          >
-            {loading}
-          </button>
+          <Button
+            text={"Submit"}
+            type={"submit"}
+            styleClass="btn btn-primary"
+            loading={this.state.loading}
+          />
         </form>
       </div>
     );
@@ -114,7 +100,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { message: state.admin.committee.message };
+  return { message: state.admin.committee.message, token: state.auth.token };
 }
 
 export default reduxForm({ validate, form: "commForm" })(

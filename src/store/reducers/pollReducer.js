@@ -3,7 +3,8 @@ import {
   STORE_POLL,
   DISPLAY_POLL,
   VOTE_STORE,
-  FINAL_SUBMIT
+  FINAL_SUBMIT,
+  STORE_ERROR
 } from "../actions/actions";
 
 const INITIAL_STATE = {
@@ -13,7 +14,8 @@ const INITIAL_STATE = {
   allCommittees: [],
   sid: 0,
   vote: [],
-  submitMessage: ""
+  submitMessage: "",
+  validationError: ""
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -42,14 +44,13 @@ export default function(state = INITIAL_STATE, action) {
         };
       }
     case VOTE_STORE:
-      console.log(action.payload);
-      console.log(state.vote);
-
       return {
         ...state,
         key: state.key + 1,
         vote: [...state.vote, action.payload]
       };
+    case STORE_ERROR:
+      return { ...state, validationError: action.payload };
     case FINAL_SUBMIT:
       return {
         ...state,
@@ -58,7 +59,8 @@ export default function(state = INITIAL_STATE, action) {
         finalState: false,
         vote: [],
         allCommittees: [],
-        currentCommittee: {}
+        currentCommittee: {},
+        validationError: ""
       };
     default:
       return state;

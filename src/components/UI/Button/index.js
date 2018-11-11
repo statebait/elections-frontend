@@ -3,6 +3,11 @@ import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 
 const Button = props => {
+  let classes = [];
+  classes.push(props.styleClass);
+  if (props.curved) {
+    classes.push("curved-button");
+  }
   let buttonContent;
   if (props.loading) {
     buttonContent = (
@@ -20,7 +25,7 @@ const Button = props => {
   return (
     <button
       type={props.type}
-      className={props.styleClass}
+      className={classes.join(" ")}
       disabled={props.loading}
       onClick={props.onClick}
     >
@@ -31,6 +36,7 @@ const Button = props => {
 
 Button.propTypes = {
   loading: PropTypes.bool,
+  curved: PropTypes.bool,
   text: PropTypes.string,
   type: PropTypes.string,
   styleClass: PropTypes.string,
@@ -40,6 +46,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   loading: false,
+  curved: false,
   text: "Button",
   type: "button",
   styleClass: "",

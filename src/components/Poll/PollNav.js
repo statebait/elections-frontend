@@ -4,12 +4,23 @@ import _ from "lodash";
 
 class PollSideNav extends Component {
   renderNavItems() {
-    return _.map(this.props.poll.allCommittees, comName => {
-      return (
-        <li className="nav-item committee_names" key={comName._id}>
-          {comName.comName}
-        </li>
-      );
+    return _.map(this.props.allCommittees, committee => {
+      if (committee._id === this.props.currentCommittee._id) {
+        return (
+          <li
+            className="nav-item committee_names active-nav-item"
+            key={committee._id}
+          >
+            {committee.comName}
+          </li>
+        );
+      } else {
+        return (
+          <li className="nav-item committee_names" key={committee._id}>
+            {committee.comName}
+          </li>
+        );
+      }
     });
   }
 
@@ -23,7 +34,10 @@ class PollSideNav extends Component {
 }
 
 function mapStateToProps(state) {
-  return { poll: state.poll };
+  return {
+    allCommittees: state.poll.allCommittees,
+    currentCommittee: state.poll.currentCommittee
+  };
 }
 
 export default connect(mapStateToProps)(PollSideNav);

@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { voteStore, finalSubmit, logOut } from "../../store/actions/";
+import {
+  voteStore,
+  finalSubmit,
+  logOut,
+  storeError
+} from "../../store/actions/";
 import _ from "lodash";
 import { isEmpty } from "../../utils/utilityFunctions";
 import Button from "../UI/Button";
+import { store } from "../../store";
 
 class PollView extends Component {
   state = {
@@ -13,6 +19,8 @@ class PollView extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
+      console.log(this.props.poll.validationError);
+
       if (this.props.poll.submitMessage === "Vote Successfully Submitted") {
         this.setState({ loading: false });
         window.alert(this.props.poll.submitMessage);
@@ -74,6 +82,7 @@ class PollView extends Component {
 
   onSubmit = values => {
     if (!isEmpty(values)) {
+      this.props.storeError("");
       let newArray = [];
       if (values.pref) {
         for (let i = 0; i < values.pref.length; i++) {
@@ -90,7 +99,7 @@ class PollView extends Component {
       };
       this.props.voteStore(voteDetail);
     } else {
-      window.alert("Please select atleast one candidate");
+      this.props.storeError("Please select atleast 1 candidate.");
     }
   };
 
@@ -129,6 +138,9 @@ class PollView extends Component {
             <form onSubmit={handleSubmit(this.onSubmit)}>
               {_.get(this.props.poll.currentCommittee, "candidates") &&
                 this.renderFields()}
+              <div style={{ color: "red" }}>
+                {this.props.poll.validationError}
+              </div>
               <div className="btn_placement">
                 <button className="btn btn-outline-dark btn-lg">Next</button>
               </div>
@@ -147,14 +159,19 @@ function validate(values) {
       for (let j = i + 1; j < values.pref.length; j++) {
         if (values.pref[i] === values.pref[j]) {
           errors.pref = "Please do not repeat candidates";
-          window.alert(errors.pref);
+          store.dispatch(storeError(errors.pref));
+        } else {
+          errors.pref = "";
+          store.dispatch(storeError(errors.pref));
         }
       }
     }
     if (!values.pref[0]) {
       errors.pref =
         "Please select at least 1 Candidate for your first preference";
-      window.alert(errors.pref);
+      store.dispatch(storeError(errors.pref));
+    } else {
+      store.dispatch(storeError(errors.pref));
     }
   }
   return errors;
@@ -167,6 +184,6 @@ function mapStateToProps(state) {
 export default reduxForm({ validate, form: "votepoll" })(
   connect(
     mapStateToProps,
-    { voteStore, finalSubmit, logOut }
+    { voteStore, finalSubmit, logOut, storeError }
   )(PollView)
 );

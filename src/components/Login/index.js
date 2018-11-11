@@ -76,6 +76,7 @@ class LoginPage extends Component {
               loading={this.props.loading}
               text="Log In"
               color="#343A40"
+              curved
             />
           </form>
         </div>

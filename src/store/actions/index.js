@@ -186,6 +186,15 @@ export function fetchCommittees(token) {
   };
 }
 
+export function storeError(error) {
+  return dispatch => {
+    dispatch({
+      type: actions.STORE_ERROR,
+      payload: error
+    });
+  };
+}
+
 export function getResult(token) {
   const request = axios({
     method: "get",

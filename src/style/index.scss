@@ -64,6 +64,11 @@ body {
   }
 }
 
+/* Curved Button */
+.curved-button {
+  border-radius: 20px;
+}
+
 /* Login Error Messages */
 .helper_text_login {
   font-size: 14px;
@@ -212,7 +217,6 @@ input[type="number"] {
 
 .login-button {
   margin-top: 10px;
-  border-radius: 20px;
   width: 100px;
 }
 
@@ -232,4 +236,8 @@ input[type="number"] {
 
 .batch-select {
   width: 500px !important;
+}
+
+.active-nav-item {
+  color: #0069d9;
 }

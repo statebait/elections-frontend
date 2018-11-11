@@ -12,6 +12,7 @@ export const ASYNC_STORE = "async_store";
 export const STORE_POLL = "store_poll";
 export const VOTE_STORE = "vote_store";
 export const FINAL_SUBMIT = "final_submit";
+export const STORE_ERROR = "store_error";
 
 //Admin Actions
 export const SEND_CANDIDATE_START = "send_candidate_start";

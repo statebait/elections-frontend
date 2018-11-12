@@ -98,10 +98,7 @@ function validate(values) {
   //Validation for the Password
   if (!values.pwd) {
     errors.pwd = "Please enter a password";
-  } else if (values.pwd.length !== 10) {
-    errors.pwd = "Please enter a valid password";
   }
-
   return errors;
 }
 

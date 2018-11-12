@@ -6,26 +6,35 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/";
 
 export function checkAuth() {
   const token = sessionStorage.getItem("TOKEN");
-  const request = axios({
-    method: "get",
-    url: `${API_URL}verifytoken`,
-    headers: { "x-access-token": token }
-  });
-  return dispatch => {
-    request
-      .then(data => {
-        dispatch({
-          type: actions.CHECK_AUTH,
-          payload: "Success"
-        });
-      })
-      .catch(err => {
-        dispatch({
-          type: actions.CHECK_AUTH,
-          payload: "Failed"
-        });
+  if (token === null) {
+    return dispatch => {
+      dispatch({
+        type: actions.CHECK_AUTH,
+        payload: "Failed"
       });
-  };
+    };
+  } else {
+    const request = axios({
+      method: "get",
+      url: `${API_URL}verifytoken`,
+      headers: { "x-access-token": token }
+    });
+    return dispatch => {
+      request
+        .then(data => {
+          dispatch({
+            type: actions.CHECK_AUTH,
+            payload: "Success"
+          });
+        })
+        .catch(err => {
+          dispatch({
+            type: actions.CHECK_AUTH,
+            payload: "Failed"
+          });
+        });
+    };
+  }
 }
 
 export function logIn(values) {

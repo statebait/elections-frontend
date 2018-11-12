@@ -16,6 +16,16 @@ class CandidateList extends Component {
           <td>{candidate.sid}</td>
           <td>{candidate.comName}</td>
           <td>{candidate.cpi}</td>
+          <td>
+            <i
+              onClick={() => {
+                console.log("Test Delete");
+              }}
+              id="deletePopover"
+              style={{ cursor: "pointer" }}
+              className="fas fa-trash-alt"
+            />
+          </td>
         </tr>
       );
     });
@@ -31,6 +41,7 @@ class CandidateList extends Component {
               <th>ID</th>
               <th>Committee</th>
               <th>CPI</th>
+              <th />
             </tr>
           </thead>
           <tbody>{this.renderCandidates()}</tbody>

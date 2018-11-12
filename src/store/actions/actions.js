@@ -21,4 +21,5 @@ export const SEND_COMMITTEE_START = "send_committee_start";
 export const SEND_COMMITTEE_END = "send_committee_end";
 export const FETCH_CANDIDATES = "fetch_candidates";
 export const FETCH_COMMITTEES = "fetch_committees";
+export const DELETE_CANDIDATE = "delete_candidate";
 export const GET_RESULT = "get_result";

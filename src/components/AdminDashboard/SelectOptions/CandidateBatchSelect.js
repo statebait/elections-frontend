@@ -7,6 +7,7 @@ class CandidateBatchSelect extends Component {
     const {
       meta: { touched, error }
     } = field;
+
     return (
       <div className="form-group">
         <label>{field.label}:</label>

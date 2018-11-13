@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   finalState: false,
   currentCommittee: {},
   allCommittees: [],
-  sid: 0,
+  sid: "",
   vote: [],
   submitMessage: "",
   validationError: ""

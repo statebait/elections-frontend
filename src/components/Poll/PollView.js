@@ -19,8 +19,6 @@ class PollView extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      console.log(this.props.poll.validationError);
-
       if (this.props.poll.submitMessage === "Vote Successfully Submitted") {
         this.setState({ loading: false });
         window.alert(this.props.poll.submitMessage);
@@ -30,9 +28,10 @@ class PollView extends Component {
   }
 
   renderField(field) {
+    const currentCommittee = this.props.poll.currentCommittee;
     let optionArray = [];
     let n = 0;
-    _.map(this.props.poll.currentCommittee.candidates, candidate => {
+    _.map(currentCommittee.candidates, candidate => {
       n++;
       optionArray.push(
         <option key={n} value={`${candidate.sid}`}>
@@ -57,11 +56,9 @@ class PollView extends Component {
   }
 
   renderFields = () => {
+    const currentCommittee = this.props.poll.currentCommittee;
     let prefArray = [],
-      prefs =
-        this.props.poll.currentCommittee.candidates.length -
-        this.props.poll.currentCommittee.seats -
-        1;
+      prefs = currentCommittee.candidates.length - currentCommittee.seats - 1;
     if (prefs >= 6) {
       prefs = 6;
     } else if (prefs <= 2) {
@@ -81,6 +78,7 @@ class PollView extends Component {
   };
 
   onSubmit = values => {
+    const currentCommittee = this.props.poll.currentCommittee;
     if (!isEmpty(values)) {
       this.props.storeError("");
       let newArray = [];
@@ -93,7 +91,7 @@ class PollView extends Component {
       }
       const batch = this.props.poll.sid.slice(2, 6);
       const voteDetail = {
-        comName: this.props.poll.currentCommittee.comName,
+        comName: currentCommittee.comName,
         batch: batch,
         prefs: newArray
       };
@@ -114,6 +112,7 @@ class PollView extends Component {
 
   render() {
     const { handleSubmit } = this.props;
+    const currentCommittee = this.props.poll.currentCommittee;
     if (this.props.poll.finalState === true) {
       return (
         <div className="submit_vote">
@@ -130,14 +129,11 @@ class PollView extends Component {
       return (
         <div>
           <div className="jumbotron">
-            <h1 className="display-4">
-              {this.props.poll.currentCommittee.comName}
-            </h1>
+            <h1 className="display-4">{currentCommittee.comName}</h1>
           </div>
           <div className="poll_candidate">
             <form onSubmit={handleSubmit(this.onSubmit)}>
-              {_.get(this.props.poll.currentCommittee, "candidates") &&
-                this.renderFields()}
+              {_.get(currentCommittee, "candidates") && this.renderFields()}
               <div style={{ color: "red" }}>
                 {this.props.poll.validationError}
               </div>
@@ -178,7 +174,10 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { poll: state.poll, token: state.auth.token };
+  return {
+    poll: state.poll,
+    token: state.auth.token
+  };
 }
 
 export default reduxForm({ validate, form: "votepoll" })(

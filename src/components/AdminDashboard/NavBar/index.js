@@ -56,6 +56,11 @@ const AdminSideNav = () => {
             Results
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/admin/stats" className="nav-link">
+            Stats
+          </Link>
+        </li>
       </ul>
     </nav>
   );

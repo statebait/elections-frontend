@@ -1,18 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import {
   voteStore,
   finalSubmit,
+  goBack,
   logOut,
   storeError
 } from "../../store/actions/";
 import _ from "lodash";
 import { isEmpty } from "../../utils/utilityFunctions";
+import { committeeMapDetailed } from "../../data";
 import Button from "../UI/Button";
 import { store } from "../../store";
 
-class PollView extends Component {
+class PollView extends React.Component {
   state = {
     loading: false
   };
@@ -110,12 +112,24 @@ class PollView extends Component {
     this.props.finalSubmit(finalPacket, this.props.token);
   }
 
+  goBack = () => {
+    this.props.goBack();
+  };
+
   render() {
     const { handleSubmit } = this.props;
     const currentCommittee = this.props.poll.currentCommittee;
     if (this.props.poll.finalState === true) {
       return (
         <div className="submit_vote">
+          <button
+            className="btn btn-outline-dark btn-lg"
+            style={{ marginRight: 10 }}
+            onClick={this.goBack}
+            type="button"
+          >
+            Back
+          </button>
           <Button
             loading={this.state.loading}
             color="#343A40"
@@ -138,9 +152,31 @@ class PollView extends Component {
                 {this.props.poll.validationError}
               </div>
               <div className="btn_placement">
-                <button className="btn btn-outline-dark btn-lg">Next</button>
+                <button
+                  className="btn btn-outline-dark btn-lg"
+                  style={{ marginRight: 10 }}
+                  onClick={this.goBack}
+                  type="button"
+                >
+                  Back
+                </button>
+                <button
+                  className="btn btn-outline-dark btn-lg"
+                  type="submit"
+                  disabled={this.props.poll.finalState}
+                >
+                  Next
+                </button>
               </div>
             </form>
+            <br />
+            <br />
+            <div>
+              <p>
+                Note: You are obliged to give atleast 1 preference of candidate
+                for each committee.
+              </p>
+            </div>
           </div>
         </div>
       );
@@ -183,6 +219,6 @@ function mapStateToProps(state) {
 export default reduxForm({ validate, form: "votepoll" })(
   connect(
     mapStateToProps,
-    { voteStore, finalSubmit, logOut, storeError }
+    { voteStore, finalSubmit, logOut, storeError, goBack }
   )(PollView)
 );

@@ -1,14 +1,19 @@
-import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import React from "react";
+import { Field, reduxForm, reset } from "redux-form";
 import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import CandidateBatchSelect from "../SelectOptions/CandidateBatchSelect";
 import Alert from "react-s-alert";
 import { sendCandidate } from "../../../store/actions/index";
 import { connect } from "react-redux";
 import Button from "../../UI/Button";
+import { isAlpha } from "../../../utils/utilityFunctions";
 
-class CandidateForm extends Component {
-  state = { loading: false };
+class CandidateForm extends React.Component {
+  state = { loading: false, hmcField: <React.Fragment />, hmc: false };
+
+  componentDidMount() {
+    this.props.dispatch(reset("candForm"));
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
@@ -40,21 +45,45 @@ class CandidateForm extends Component {
   onSubmit(values) {
     this.setState({ loading: true });
     let finalValues;
-    if (values.hmcFloor) {
+    if (this.state.hmc) {
       finalValues = {
-        ...values,
+        name: values.name,
+        sid: values.sid,
+        batch: values.batch,
         comName: values.hmcFloor
       };
     } else {
       finalValues = {
-        ...values
+        name: values.name,
+        sid: values.sid,
+        batch: values.batch,
+        comName: values.comName
       };
     }
     this.props.sendCandidate(finalValues, this.props.token);
   }
 
+  hmcDynamic = value => {
+    if (value === "HMC") {
+      this.setState({
+        hmcField: (
+          <Field
+            label="HMC Floor"
+            name="hmcFloor"
+            type="name"
+            component={this.renderField}
+          />
+        ),
+        hmc: true
+      });
+    } else {
+      this.setState({ hmcField: <React.Fragment />, hmc: false });
+    }
+  };
+
   render() {
     const { handleSubmit } = this.props;
+    const hmcField = this.state.hmcField;
     return (
       <div className="admin_main_display">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -71,19 +100,12 @@ class CandidateForm extends Component {
             component={this.renderField}
           />
           <CandidateBatchSelect />
-          <CommitteeSelect />
-          <Field
-            label="HMC Floor"
-            name="hmcFloor"
-            type="name"
-            component={this.renderField}
+          <CommitteeSelect
+            onChange={value => {
+              this.hmcDynamic(value);
+            }}
           />
-          <Field
-            label="CPI"
-            name="cpi"
-            type="number"
-            component={this.renderField}
-          />
+          {hmcField}
           <Button
             loading={this.state.loading}
             text={"Submit"}
@@ -92,6 +114,11 @@ class CandidateForm extends Component {
           />
         </form>
         <br />
+        <div>
+          Please enter the floor in the follwing format: floor_letter/floor_no
+          <br />
+          For floor no: Ground - 1, Mid - 2, Top - 3
+        </div>
       </div>
     );
   }
@@ -122,6 +149,18 @@ function validate(values) {
     errors.cpi = "Please enter a CPI";
   } else if (isNaN(values.cpi) || values.cpi > 10) {
     errors.cpi = "Please enter a valid CPI";
+  }
+
+  if (values.comName === "HMC" && values.hmcFloor) {
+    if (values.hmcFloor.length !== 3)
+      errors.hmcFloor = "Please enter a valid floor";
+    if (
+      !isAlpha(values.hmcFloor[0]) ||
+      values.hmcFloor[1] !== "/" ||
+      isNaN(values.hmcFloor[2])
+    ) {
+      errors.hmcFloor = "Please enter a valid floor";
+    }
   }
 
   return errors;

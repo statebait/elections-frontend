@@ -88,6 +88,16 @@ export function voteStore(voteDetail) {
   };
 }
 
+export function goBack() {
+  return dispatch => {
+    dispatch({
+      type: actions.GO_BACK
+    });
+    dispatch(reset("votepoll"));
+    dispatch({ type: actions.DISPLAY_POLL });
+  };
+}
+
 export function finalSubmit(vote, token) {
   const request = axios({
     method: "post",
@@ -220,3 +230,55 @@ export function getResult(token) {
     });
   };
 }
+
+export const getStats = token => {
+  const request = axios({
+    method: "get",
+    headers: { "x-access-token": token },
+    url: `${API_URL}result/stats`
+  });
+
+  return dispatch => {
+    request.then(data => {
+      dispatch({
+        type: actions.GET_STATS,
+        payload: data.data
+      });
+    });
+  };
+};
+
+export const deleteCandidate = (id, token) => {
+  const request = axios({
+    method: "delete",
+    headers: { "x-access-token": token },
+    url: `${API_URL}candidate/${id}`
+  });
+
+  return dispatch => {
+    request.then(data => {
+      console.log(data);
+      dispatch({
+        type: actions.DELETE_CANDIDATE,
+        payload: data.data
+      });
+    });
+  };
+};
+
+export const deleteCommittee = (id, token) => {
+  const request = axios({
+    method: "delete",
+    headers: { "x-access-token": token },
+    url: `${API_URL}committee/${id}`
+  });
+
+  return dispatch => {
+    request.then(data => {
+      dispatch({
+        type: actions.DELETE_COMMITTEE,
+        payload: data.data
+      });
+    });
+  };
+};

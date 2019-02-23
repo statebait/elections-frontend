@@ -12,6 +12,7 @@ import CommitteeForm from "./Forms/CommitteForm";
 import CandidateList from "./DataLists/CandidateList";
 import CommitteeList from "./DataLists/CommitteeList";
 import ResultsView from "./Results/";
+import StatsPage from "./Stats";
 
 //Alert CSS
 import "react-s-alert/dist/s-alert-default.css";
@@ -42,6 +43,7 @@ class AdminDashboard extends Component {
             <Route path="/admin/candidate_list" component={CandidateList} />
             <Route path="/admin/committee_list" component={CommitteeList} />
             <Route path="/admin/results" component={ResultsView} />
+            <Route path="/admin/stats" component={StatsPage} />
             <Route path="/admin" component={DefaultBlock} />
           </Switch>
         </div>

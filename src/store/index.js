@@ -10,7 +10,7 @@ import authReducer from "./reducers/authReducer";
 const rootPersistConfig = {
   key: "root",
   storage: storageSession,
-  blacklist: ["auth"]
+  blacklist: ["auth", "admin"]
 };
 
 const authPersistConfig = {
@@ -19,11 +19,17 @@ const authPersistConfig = {
   blacklist: ["message", "loading", "error"]
 };
 
+const adminPersistConfig = {
+  key: "admin",
+  storage: storageSession,
+  blacklist: ["candidate", "committee"]
+};
+
 const rootReducer = combineReducers({
   form: formReducer,
   auth: persistReducer(authPersistConfig, authReducer),
   poll: pollReducer,
-  admin: adminReducer
+  admin: persistReducer(adminPersistConfig, adminReducer)
 });
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);

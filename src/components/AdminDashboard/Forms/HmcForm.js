@@ -4,6 +4,7 @@ import { sendCommittee } from "../../../store/actions/index";
 import { connect } from "react-redux";
 import Alert from "react-s-alert";
 import Button from "../../UI/Button";
+import { isAlpha } from "../../../utils/utilityFunctions";
 
 class HmcForm extends Component {
   state = {
@@ -40,7 +41,11 @@ class HmcForm extends Component {
 
   onSubmit(values) {
     this.setState({ loading: true });
-    const data = { comName: values.comName, seats: 1, batch: "0000" };
+    const data = {
+      comName: values.comName.toUpperCase(),
+      seats: 1,
+      batch: "0000"
+    };
     this.props.sendCommittee(data, this.props.token);
   }
 
@@ -62,6 +67,12 @@ class HmcForm extends Component {
             loading={this.state.loading}
           />
         </form>
+        <br />
+        <div>
+          Please enter the floor in the follwing format: floor_letter/floor_no
+          <br />
+          For floor no: Ground - 1, Mid - 2, Top - 3
+        </div>
       </div>
     );
   }
@@ -72,6 +83,19 @@ function validate(values) {
 
   if (!values.comName) {
     errors.comName = "Please enter a committee";
+  }
+
+  if (values.comName) {
+    if (values.comName.length !== 3) {
+      errors.comName = "Please enter a valid floor";
+    }
+    if (
+      !isAlpha(values.comName[0]) ||
+      values.comName[1] !== "/" ||
+      isNaN(values.comName[2])
+    ) {
+      errors.comName = "Please enter a valid floor";
+    }
   }
 
   return errors;

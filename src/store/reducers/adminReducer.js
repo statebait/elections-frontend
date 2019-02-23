@@ -5,7 +5,10 @@ import {
   SEND_COMMITTEE_END,
   FETCH_CANDIDATES,
   FETCH_COMMITTEES,
-  GET_RESULT
+  DELETE_CANDIDATE,
+  DELETE_COMMITTEE,
+  GET_RESULT,
+  GET_STATS
 } from "../actions/actions";
 
 const INITIAL_STATE = {
@@ -18,7 +21,8 @@ const INITIAL_STATE = {
     message: "",
     list: []
   },
-  results: []
+  results: [],
+  stats: {}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -32,11 +36,30 @@ export default function(state = INITIAL_STATE, action) {
     case SEND_COMMITTEE_END:
       return { ...state, committee: { message: action.payload } };
     case FETCH_CANDIDATES:
-      return { ...state, candidate: { list: action.payload.data } };
+      return {
+        ...state,
+        candidate: { list: action.payload.data, message: "" }
+      };
     case FETCH_COMMITTEES:
-      return { ...state, committee: { list: action.payload.data } };
+      return {
+        ...state,
+        committee: { list: action.payload.data, message: "" }
+      };
+    case DELETE_CANDIDATE:
+      return {
+        ...state,
+        candidate: { ...state.candidate, message: action.payload }
+      };
+    case DELETE_COMMITTEE:
+      return {
+        ...state,
+        committee: { ...state.committee, message: action.payload }
+      };
     case GET_RESULT:
       return { ...state, results: action.payload.data.allResults };
+    case GET_STATS:
+      console.log(action.payload);
+      return { ...state, stats: action.payload };
     default:
       return state;
   }

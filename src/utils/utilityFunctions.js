@@ -4,3 +4,7 @@ export function isEmpty(obj) {
   }
   return true;
 }
+
+export var isAlpha = function(ch) {
+  return /^[A-Z]$/i.test(ch);
+};

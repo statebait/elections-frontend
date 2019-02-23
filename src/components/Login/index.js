@@ -1,17 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { logIn, checkAuth } from "../../store/actions/index";
 import Button from "../UI/Button";
+import "./style.scss";
 
-const HeadStyle = {
-  paddingTop: "80px",
-  fontSize: "80px",
-  color: "#343a40"
-};
-
-class LoginPage extends Component {
+class LoginPage extends React.Component {
   componentDidMount() {
     this.props.checkAuth();
   }
@@ -51,8 +46,11 @@ class LoginPage extends Component {
     } else {
       return (
         <div className="login-wrapper">
-          <div style={HeadStyle}>
-            <p>DA-IICT Elections</p>
+          <div className="login-title">
+            <span>
+              <img src={require("../../assets/da_logo.png")} alt="DA Logo" />
+            </span>
+            <span style={{ marginLeft: "30px" }}>Daiict Elections</span>
           </div>
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
             <div>
@@ -72,10 +70,10 @@ class LoginPage extends Component {
             <div className="helper_text_login">{this.props.error}</div>
             <Button
               type="submit"
-              styleClass="btn btn-outline-dark login-button"
+              styleClass="btn btn-outline-light login-button"
               loading={this.props.loading}
               text="Log In"
-              color="#343A40"
+              color="white"
               curved
             />
           </form>

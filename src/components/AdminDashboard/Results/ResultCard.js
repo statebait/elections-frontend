@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import "./style.scss";
 
 const Winners = props => {
   let newWinnersList = [];
@@ -15,7 +16,7 @@ const Winners = props => {
   });
   return newWinnersList.map(item => {
     return (
-      <li key={item.sid} className="list-group-item bg-dark">
+      <li key={item.sid} className="list-group-item">
         {item.name} - {item.sid}
       </li>
     );
@@ -24,7 +25,7 @@ const Winners = props => {
 
 const ResultCard = props => {
   return (
-    <div className="card text-white bg-dark mb-3">
+    <div className="card mb-3 result-card">
       <div className="card-body">
         <h5 className="card-title">{props.data.comName}</h5>
         <h6 className="card-subtitle mb-2 text-muted">{props.data.batches}</h6>

@@ -1,0 +1,50 @@
+/* Login Error Messages */
+.helper_text_login {
+  font-size: 14px;
+  color: red !important;
+}
+
+/* The Login Wrap */
+.login-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10%;
+  background-color: #1f2d3b;
+  color: white;
+}
+
+.login-title {
+  color: white;
+  font-family: "ZCOOL QingKe HuangYou", cursive;
+  font-size: 90px;
+  margin-bottom: 20px;
+  img {
+    margin-top: -10px;
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* Student ID field styling */
+#number_input_style {
+  width: 300px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Password field styling  */
+#password_input_style {
+  width: 300px;
+}

@@ -23,6 +23,7 @@ class CommitteeSelect extends Component {
           <option value="CMC">Cafeteria Management Committee</option>
           <option value="SPORT">Sports Committee</option>
           <option value="CULT">Cultural Committee</option>
+          <option value="HMC">Hostel Management Committee</option>
         </select>
         <div className="helper_text">{touched ? error : ""}</div>
       </div>
@@ -36,6 +37,9 @@ class CommitteeSelect extends Component {
         name="comName"
         type="text"
         component={this.renderSelect}
+        onChange={(event, newValue, previousValue, name) => {
+          this.props.onChange(newValue);
+        }}
       />
     );
   }

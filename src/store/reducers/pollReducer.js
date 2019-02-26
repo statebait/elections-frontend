@@ -11,9 +11,11 @@ import {
 const INITIAL_STATE = {
   key: 0,
   finalState: false,
+  disableBack: false,
   currentCommittee: {},
   allCommittees: [],
   sid: "",
+  name: "",
   vote: [],
   submitMessage: "",
   validationError: ""
@@ -30,33 +32,32 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         allCommittees: action.payload.data.list,
-        submitMessage: ""
+        submitMessage: "",
+        name: action.payload.data.name
       };
     case DISPLAY_POLL:
       if (state.allCommittees[state.key] != null) {
-        return {
-          ...state,
-          finalState: false,
-          currentCommittee: state.allCommittees[state.key]
-        };
+        if (state.key === 0) {
+          return {
+            ...state,
+            finalState: false,
+            disableBack: true,
+            currentCommittee: state.allCommittees[state.key]
+          };
+        } else {
+          return {
+            ...state,
+            finalState: false,
+            disableBack: false,
+            currentCommittee: state.allCommittees[state.key]
+          };
+        }
       } else {
         return {
           ...state,
           finalState: true
         };
       }
-    // if (state.key === state.allCommittees.length - 1) {
-    //   return {
-    //     ...state,
-    //     finalState: true
-    //   };
-    // } else {
-    //   return {
-    //     ...state,
-    //     finalState: false,
-    //     currentCommittee: state.allCommittees[state.key]
-    //   };
-    // }
     case VOTE_STORE:
       return {
         ...state,

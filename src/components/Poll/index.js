@@ -14,17 +14,17 @@ class PollMain extends Component {
   };
   render() {
     return (
-      <div style={{ display: "flex", columnGap: "40px;" }}>
+      <div style={{ display: "flex", columnGap: "40px" }}>
         <PollSideNav />
         <PollView logout={this.logOut} />
-        <UserDetails data={"fire"} />
+        <UserDetails sid={this.props.sid} name={this.props.name} />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return { state };
+  return { sid: state.poll.sid, name: state.poll.name };
 };
 
 export default connect(

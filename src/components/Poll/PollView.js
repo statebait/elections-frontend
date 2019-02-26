@@ -1,6 +1,8 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import _ from "lodash";
+import Button from "../UI/Button";
 import {
   voteStore,
   finalSubmit,
@@ -8,11 +10,9 @@ import {
   logOut,
   storeError
 } from "../../store/actions/";
-import _ from "lodash";
-import { isEmpty } from "../../utils/utilityFunctions";
-import { committeeMapDetailed } from "../../data";
-import Button from "../UI/Button";
 import { store } from "../../store";
+import { isEmpty, useMap } from "../../utils/utilityFunctions";
+import { committeeMapDetailed } from "../../data";
 
 class PollView extends React.Component {
   state = {
@@ -143,7 +143,11 @@ class PollView extends React.Component {
       return (
         <div>
           <div className="jumbotron">
-            <h1 className="display-4">{currentCommittee.comName}</h1>
+            <h1 className="display-4">
+              {useMap
+                ? committeeMapDetailed[currentCommittee.comName]
+                : currentCommittee.comName}
+            </h1>
           </div>
           <div className="poll_candidate">
             <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -157,14 +161,11 @@ class PollView extends React.Component {
                   style={{ marginRight: 10 }}
                   onClick={this.goBack}
                   type="button"
+                  disabled={this.props.poll.disableBack}
                 >
                   Back
                 </button>
-                <button
-                  className="btn btn-outline-dark btn-lg"
-                  type="submit"
-                  disabled={this.props.poll.finalState}
-                >
+                <button className="btn btn-outline-dark btn-lg" type="submit">
                   Next
                 </button>
               </div>

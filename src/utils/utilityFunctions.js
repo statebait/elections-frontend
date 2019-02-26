@@ -5,6 +5,10 @@ export function isEmpty(obj) {
   return true;
 }
 
-export var isAlpha = function(ch) {
+export const isAlpha = function(ch) {
   return /^[A-Z]$/i.test(ch);
 };
+
+export const useMap = !(
+  process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
+);

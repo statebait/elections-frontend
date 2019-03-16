@@ -91,7 +91,7 @@ class CommitteeList extends Component {
           <p>Are you sure?</p>
           <Button
             loading={this.props.loading}
-            styleClass="btn btn-danger righted"
+            className="btn btn-danger righted"
             text="Confirm"
             color="black"
             onClick={() => {
@@ -101,7 +101,7 @@ class CommitteeList extends Component {
           />
           <Button
             loading={this.props.loading}
-            styleClass="btn"
+            className="btn"
             text="Cancel"
             color="black"
             onClick={this.closeModal}

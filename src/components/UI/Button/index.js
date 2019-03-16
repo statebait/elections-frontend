@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const Button = props => {
   let classes = [];
-  classes.push(props.styleClass);
+  classes.push(props.className);
   if (props.curved) {
     classes.push("curved-button");
   }
@@ -39,7 +39,6 @@ Button.propTypes = {
   curved: PropTypes.bool,
   text: PropTypes.string,
   type: PropTypes.string,
-  styleClass: PropTypes.string,
   color: PropTypes.string,
   onClick: PropTypes.func
 };
@@ -49,7 +48,6 @@ Button.defaultProps = {
   curved: false,
   text: "Button",
   type: "button",
-  styleClass: "",
   color: "white"
 };
 

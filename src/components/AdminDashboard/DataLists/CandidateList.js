@@ -80,7 +80,7 @@ class CandidateList extends Component {
         >
           <p>Are you sure?</p>
           <Button
-            styleClass="btn btn-danger righted"
+            className="btn btn-danger righted"
             text="Confirm"
             color="black"
             onClick={() => {
@@ -89,7 +89,7 @@ class CandidateList extends Component {
             curved
           />
           <Button
-            styleClass="btn"
+            className="btn"
             text="Cancel"
             color="black"
             onClick={this.closeModal}

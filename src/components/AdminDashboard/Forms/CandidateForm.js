@@ -110,12 +110,12 @@ class CandidateForm extends React.Component {
             loading={this.state.loading}
             text={"Submit"}
             type={"submit"}
-            styleClass="btn btn-primary"
+            className="btn btn-primary"
           />
         </form>
         <br />
         <div>
-          Please enter the floor in the follwing format: floor_letter/floor_no
+          Please enter the floor in the follwing format: floor_letter//floor_no
           <br />
           For floor no: Ground - 1, Mid - 2, Top - 3
         </div>
@@ -152,11 +152,11 @@ function validate(values) {
   }
 
   if (values.comName === "HMC" && values.hmcFloor) {
-    if (values.hmcFloor.length !== 3)
+    if (values.hmcFloor.length !== 4)
       errors.hmcFloor = "Please enter a valid floor";
     if (
       !isAlpha(values.hmcFloor[0]) ||
-      values.hmcFloor[1] !== "/" ||
+      values.hmcFloor[1] !== "//" ||
       isNaN(values.hmcFloor[2])
     ) {
       errors.hmcFloor = "Please enter a valid floor";

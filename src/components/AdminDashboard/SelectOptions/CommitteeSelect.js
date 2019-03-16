@@ -33,7 +33,7 @@ class CommitteeSelect extends Component {
   render() {
     return (
       <Field
-        label="Committee Applied for"
+        label="Committee"
         name="comName"
         type="text"
         component={this.renderSelect}

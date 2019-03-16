@@ -70,7 +70,7 @@ class LoginPage extends React.Component {
             <div className="helper_text_login">{this.props.error}</div>
             <Button
               type="submit"
-              styleClass="btn btn-outline-light login-button"
+              className="btn btn-outline-light login-button"
               loading={this.props.loading}
               text="Log In"
               color="white"

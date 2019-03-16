@@ -134,7 +134,7 @@ class PollView extends React.Component {
             loading={this.state.loading}
             color="#343A40"
             text="Submit Vote"
-            styleClass="btn btn-outline-dark btn-lg"
+            className="btn btn-outline-dark btn-lg"
             onClick={this.voteSubmit.bind(this)}
           />
         </div>

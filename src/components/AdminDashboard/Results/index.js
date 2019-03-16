@@ -36,7 +36,7 @@ class ResultsView extends Component {
           onClick={() => {
             this.setState({ show: true });
           }}
-          styleClass="btn btn-primary"
+          className="btn btn-primary"
           text="Show"
         />
       );

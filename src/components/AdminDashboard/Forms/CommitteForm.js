@@ -59,7 +59,11 @@ class CommitteeForm extends Component {
     return (
       <div className="admin_main_display">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <CommitteeSelect />
+          <CommitteeSelect
+            onChange={value => {
+              return value;
+            }}
+          />
           <CommitteeBatchSelect />
           <Field
             label="Seats:"
@@ -70,7 +74,7 @@ class CommitteeForm extends Component {
           <Button
             text={"Submit"}
             type={"submit"}
-            styleClass="btn btn-primary"
+            className="btn btn-primary"
             loading={this.state.loading}
           />
         </form>

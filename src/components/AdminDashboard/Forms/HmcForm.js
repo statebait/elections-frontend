@@ -63,13 +63,13 @@ class HmcForm extends Component {
           <Button
             text={"Submit"}
             type={"submit"}
-            styleClass="btn btn-primary"
+            className="btn btn-primary"
             loading={this.state.loading}
           />
         </form>
         <br />
         <div>
-          Please enter the floor in the follwing format: floor_letter/floor_no
+          Please enter the floor in the follwing format: floor_letter//floor_no
           <br />
           For floor no: Ground - 1, Mid - 2, Top - 3
         </div>
@@ -86,12 +86,12 @@ function validate(values) {
   }
 
   if (values.comName) {
-    if (values.comName.length !== 3) {
+    if (values.comName.length !== 4) {
       errors.comName = "Please enter a valid floor";
     }
     if (
       !isAlpha(values.comName[0]) ||
-      values.comName[1] !== "/" ||
+      values.comName[1] !== "//" ||
       isNaN(values.comName[2])
     ) {
       errors.comName = "Please enter a valid floor";

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import Button from "../../UI/Button";
+import Alert from "react-s-alert";
 import { connect } from "react-redux";
 import { fetchCandidates, deleteCandidate } from "../../../store/actions/index";
 import Modal from "react-modal";
@@ -27,11 +28,14 @@ class CandidateList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if (this.props !== prevProps) {
-    //   if (this.props.message.includes("Successfully deleted Candidate")) {
-    //     this.props.fetchCandidates(this.props.token);
-    //   }
-    // }
+    if (this.props !== prevProps) {
+      if (this.props.error) {
+        Alert.error(this.props.message);
+      } else if (this.props.message.includes("Deleted Candidate")) {
+        this.props.fetchCandidates(this.props.token);
+        Alert.success(this.props.message);
+      }
+    }
   }
 
   handleDelete = id => {
@@ -117,7 +121,8 @@ function mapStateToProps(state) {
   return {
     candidates: state.admin.candidate.list,
     token: state.auth.token,
-    message: state.admin.candidate.message
+    message: state.admin.candidate.message,
+    error: state.admin.candidate.error
   };
 }
 

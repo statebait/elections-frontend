@@ -256,13 +256,17 @@ export const deleteCandidate = (id, token) => {
   });
 
   return dispatch => {
-    request.then(data => {
-      console.log(data);
-      dispatch({
-        type: actions.DELETE_CANDIDATE,
-        payload: data.data
+    request
+      .then(() => {
+        dispatch({
+          type: actions.DELETE_CANDIDATE
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: actions.DELETE_CANDIDATE_ERROR
+        });
       });
-    });
   };
 };
 
@@ -274,11 +278,16 @@ export const deleteCommittee = (id, token) => {
   });
 
   return dispatch => {
-    request.then(data => {
-      dispatch({
-        type: actions.DELETE_COMMITTEE,
-        payload: data.data
+    request
+      .then(() => {
+        dispatch({
+          type: actions.DELETE_COMMITTEE
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: actions.DELETE_COMMITTEE_ERROR
+        });
       });
-    });
   };
 };

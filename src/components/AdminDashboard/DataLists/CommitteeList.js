@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import Button from "../../UI/Button";
+import Alert from "react-s-alert";
 import { fetchCommittees, deleteCommittee } from "../../../store/actions/index";
 
 const customStyles = {
@@ -28,8 +29,11 @@ class CommitteeList extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
-      if (this.props.message.includes("Deleted Committee")) {
+      if (this.props.error) {
+        Alert.error(this.props.message);
+      } else if (this.props.message.includes("Deleted Committee")) {
         this.props.fetchCommittees(this.props.token);
+        Alert.success(this.props.message);
       }
     }
   }
@@ -128,7 +132,8 @@ function mapStateToProps(state) {
   return {
     committees: state.admin.committee.list,
     token: state.auth.token,
-    message: state.admin.committee.message
+    message: state.admin.committee.message,
+    error: state.admin.committee.error
   };
 }
 

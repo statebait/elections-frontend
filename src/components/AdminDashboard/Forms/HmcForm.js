@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Alert from "react-s-alert";
 import Button from "../../UI/Button";
 import { isAlpha } from "../../../utils/utilityFunctions";
+import { batches } from "../../../data";
 
 class HmcForm extends Component {
   state = {
@@ -41,10 +42,14 @@ class HmcForm extends Component {
 
   onSubmit(values) {
     this.setState({ loading: true });
+    let temp = [];
+    batches.map(item => {
+      return temp.push(item.value);
+    });
     const data = {
       comName: values.comName.toUpperCase(),
       seats: 1,
-      batch: "0000"
+      batches: temp
     };
     this.props.sendCommittee(data, this.props.token);
   }
@@ -86,7 +91,7 @@ function validate(values) {
   }
 
   if (values.comName) {
-    if (values.comName.length !== 4) {
+    if (values.comName.length !== 3) {
       errors.comName = "Please enter a valid floor";
     }
     if (

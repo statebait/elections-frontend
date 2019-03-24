@@ -50,6 +50,7 @@ class CandidateForm extends React.Component {
         name: values.name,
         sid: values.sid,
         batch: values.batch,
+        cpi: values.cpi,
         comName: values.hmcFloor
       };
     } else {
@@ -57,6 +58,7 @@ class CandidateForm extends React.Component {
         name: values.name,
         sid: values.sid,
         batch: values.batch,
+        cpi: values.cpi,
         comName: values.comName
       };
     }
@@ -96,6 +98,12 @@ class CandidateForm extends React.Component {
           <Field
             label="Student ID"
             name="sid"
+            type="number"
+            component={this.renderField}
+          />
+          <Field
+            label="CPI"
+            name="cpi"
             type="number"
             component={this.renderField}
           />
@@ -152,7 +160,7 @@ function validate(values) {
   }
 
   if (values.comName === "HMC" && values.hmcFloor) {
-    if (values.hmcFloor.length !== 4)
+    if (values.hmcFloor.length !== 3)
       errors.hmcFloor = "Please enter a valid floor";
     if (
       !isAlpha(values.hmcFloor[0]) ||

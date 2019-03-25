@@ -49,7 +49,8 @@ class HmcForm extends Component {
     const data = {
       comName: values.comName.toUpperCase(),
       seats: 1,
-      batches: temp
+      batches: temp,
+      isHmc: true
     };
     this.props.sendCommittee(data, this.props.token);
   }

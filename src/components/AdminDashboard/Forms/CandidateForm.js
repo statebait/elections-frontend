@@ -1,11 +1,11 @@
 import React from "react";
-import { Field, reduxForm, reset } from "redux-form";
 import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import CandidateBatchSelect from "../SelectOptions/CandidateBatchSelect";
 import Alert from "react-s-alert";
-import { sendCandidate } from "../../../store/actions/index";
-import { connect } from "react-redux";
 import Button from "../../UI/Button";
+import { sendCandidate } from "../../../store/actions/index";
+import { Field, reduxForm, reset } from "redux-form";
+import { connect } from "react-redux";
 import { isAlpha } from "../../../utils/utilityFunctions";
 
 class CandidateForm extends React.Component {
@@ -112,6 +112,7 @@ class CandidateForm extends React.Component {
             onChange={value => {
               this.hmcDynamic(value);
             }}
+            hmc
           />
           {hmcField}
           <Button

@@ -19,7 +19,11 @@ class CandidateBatchSelect extends Component {
         >
           <option value="">No Batch Selected</option>
           {batches.map(item => {
-            return <option value={item.value}>{item.label}</option>;
+            return (
+              <option key={item.label} value={item.value}>
+                {item.label}
+              </option>
+            );
           })}
         </select>
         <div className="helper_text">{touched ? error : ""}</div>

@@ -21,6 +21,7 @@ class CommitteeSelect extends Component {
           {committees.map(item => {
             if (!this.props.hmc) {
               if (item.shortName === "HMC") {
+                return <React.Fragment key={item.shortName} />;
               } else
                 return (
                   <option key={item.shortName} value={item.shortName}>

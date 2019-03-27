@@ -13,12 +13,10 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
-    "chart.js": "^2.7.3",
     "lodash": "^4.17.10",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
-    "react-chartkick": "^0.3.0",
     "react-dom": "^16.8.5",
     "react-loading": "^2.0.3",
     "react-modal": "^3.8.1",

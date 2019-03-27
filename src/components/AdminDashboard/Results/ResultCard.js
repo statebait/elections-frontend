@@ -1,5 +1,7 @@
 import React from "react";
 import _ from "lodash";
+import { useMap, floorMapper } from "../../../utils/utilityFunctions";
+import { committeeMapDetailed } from "../../../data";
 import "./style.scss";
 
 const Winners = props => {
@@ -23,12 +25,28 @@ const Winners = props => {
   });
 };
 
+function CommitteeName(props) {
+  if (useMap) {
+    if (committeeMapDetailed[props.item]) {
+      return committeeMapDetailed[props.item];
+    } else {
+      return floorMapper(props.item);
+    }
+  } else {
+    return props.item;
+  }
+}
+
 const ResultCard = props => {
   return (
     <div className="card mb-3 result-card">
       <div className="card-body">
-        <h5 className="card-title">{props.data.comName}</h5>
-        <h6 className="card-subtitle mb-2 text-muted">{props.data.batches}</h6>
+        <h5 className="card-title">
+          <CommitteeName item={props.data.comName} />
+        </h5>
+        <h6 className="card-subtitle mb-2 text-muted">
+          {props.data.batches.join(" ")}
+        </h6>
         <ul className="list-group list-group-flush">
           <Winners
             winners={props.data.winners}

@@ -51,7 +51,7 @@ class CandidateForm extends React.Component {
         sid: values.sid,
         batch: values.batch,
         cpi: values.cpi,
-        comName: values.hmcFloor
+        comName: values.hmcFloor.toUpperCase()
       };
     } else {
       finalValues = {
@@ -152,6 +152,8 @@ function validate(values) {
 
   if (!values.batch) {
     errors.batch = "Please select a batch";
+  } else if (values.batch !== values.sid.substring(2, 6)) {
+    errors.batch = "Batch does not match Student ID of candidate";
   }
 
   if (!values.cpi) {

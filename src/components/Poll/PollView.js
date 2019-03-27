@@ -11,8 +11,8 @@ import {
   storeError
 } from "../../store/actions/";
 import { store } from "../../store";
-import { isEmpty, useMap } from "../../utils/utilityFunctions";
-import { committeeMapDetailed } from "../../data";
+import { isEmpty } from "../../utils/utilityFunctions";
+import CommitteeName from "../UI/CommitteeName";
 
 class PollView extends React.Component {
   state = {
@@ -144,9 +144,10 @@ class PollView extends React.Component {
         <div>
           <div className="jumbotron">
             <h1 className="display-4">
-              {useMap
+              {/* {useMap
                 ? committeeMapDetailed[currentCommittee.comName]
-                : currentCommittee.comName}
+                : currentCommittee.comName} */}
+              <CommitteeName name={currentCommittee.comName} useDetailed />
             </h1>
           </div>
           <div className="poll_candidate">

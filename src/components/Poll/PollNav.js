@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import { committeeMap } from "../../data";
-import { useMap } from "../../utils/utilityFunctions";
+import CommitteeName from "../UI/CommitteeName";
 
 class PollSideNav extends Component {
   renderNavItems() {
@@ -13,13 +12,13 @@ class PollSideNav extends Component {
             className="nav-item committee_names active-nav-item"
             key={committee._id}
           >
-            {useMap ? committeeMap[committee.comName] : committee.comName}
+            <CommitteeName name={committee.comName} />
           </li>
         );
       } else {
         return (
           <li className="nav-item committee_names" key={committee._id}>
-            {useMap ? committeeMap[committee.comName] : committee.comName}
+            <CommitteeName name={committee.comName} />
           </li>
         );
       }

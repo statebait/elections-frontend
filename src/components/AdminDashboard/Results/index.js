@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import ReactLoading from "react-loading";
 import { getResult } from "../../../store/actions";
 import ResultCard from "./ResultCard";
 import Button from "../../UI/Button";
@@ -9,20 +10,23 @@ class ResultsView extends Component {
     show: false
   };
 
-  componentDidMount() {
-    this.props.getResult(this.props.token);
-  }
-
   renderVotes() {
     let results = this.props.admin.results;
-    if (results) {
-      let n = 0;
+    let n = 0;
+    if (results.length !== 0) {
       return results.map(item => {
         n++;
         return <ResultCard key={n} data={item} />;
       });
     } else {
-      return <div>Loading...</div>;
+      return (
+        <ReactLoading
+          type={"cubes"}
+          color={"black"}
+          height={"50px"}
+          width={"50px"}
+        />
+      );
     }
   }
 
@@ -35,9 +39,10 @@ class ResultsView extends Component {
         <Button
           onClick={() => {
             this.setState({ show: true });
+            this.props.getResult(this.props.token);
           }}
           className="btn btn-primary"
-          text="Show"
+          text="Compute"
         />
       );
     }

@@ -22,7 +22,7 @@ const authPersistConfig = {
 const adminPersistConfig = {
   key: "admin",
   storage: storageSession,
-  blacklist: ["candidate", "committee"]
+  blacklist: ["candidate", "committee", "results"]
 };
 
 const rootReducer = combineReducers({

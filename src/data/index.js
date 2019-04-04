@@ -1,4 +1,5 @@
 export const batches = [
+  { value: "1801", label: "Btech 2018" },
   { value: "1701", label: "BTech 2017" },
   { value: "1601", label: "BTech 2016" },
   { value: "1811", label: "MTech 2018" },
@@ -24,8 +25,7 @@ export const committeeMapDetailed = {
   CMC: "Cafetaria Management Committee",
   SPORT: "Sports Committee",
   CULT: "Cultural Committee",
-  HMC: "Hostel Management Committee",
-  "*": function() {}
+  HMC: "Hostel Management Committee"
 };
 
 export const committees = [

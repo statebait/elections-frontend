@@ -14,13 +14,15 @@ export const useMap = !(
 );
 
 export function floorMapper(floor) {
-  let level;
-  if (floor[2] === "1") {
-    level = "Ground";
-  } else if (floor[2] === "2") {
-    level = "First";
-  } else if (floor[2] === "3") {
-    level = "Top";
+  let level = "";
+  if (floor) {
+    if (floor[2] === "1") {
+      level = "Ground";
+    } else if (floor[2] === "2") {
+      level = "First";
+    } else if (floor[2] === "3") {
+      level = "Top";
+    }
+    return `${floor[0].toUpperCase()}-${level}`;
   }
-  return `${floor[0].toUpperCase()}-${level}`;
 }

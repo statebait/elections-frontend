@@ -158,7 +158,7 @@ function validate(values) {
 
   if (!values.cpi) {
     errors.cpi = "Please enter a CPI";
-  } else if (isNaN(values.cpi) || values.cpi > 10) {
+  } else if (isNaN(values.cpi) || values.cpi > 10 || values.cpi < 0) {
     errors.cpi = "Please enter a valid CPI";
   }
 

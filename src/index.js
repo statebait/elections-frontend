@@ -2,7 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
 //Global CSS File
@@ -25,13 +25,13 @@ import AdminDashboard from "./components/AdminDashboard";
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <PrivateRoute path="/admin" component={AdminDashboard} />
           <PrivateRoute path="/poll" component={PollMain} />
           <Route path="/" component={LoginPage} />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </PersistGate>
   </Provider>,
   document.getElementById("root")

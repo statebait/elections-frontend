@@ -144,9 +144,6 @@ class PollView extends React.Component {
         <div>
           <div className="jumbotron">
             <h1 className="display-4">
-              {/* {useMap
-                ? committeeMapDetailed[currentCommittee.comName]
-                : currentCommittee.comName} */}
               <CommitteeName name={currentCommittee.comName} useDetailed />
             </h1>
           </div>

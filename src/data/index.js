@@ -22,7 +22,7 @@ export const committeeMapDetailed = {
   ICT: "ICT Committee",
   SPC: "Student Placement Cell",
   SYN: "Annual Festival Committee",
-  CMC: "Cafetaria Management Committee",
+  CMC: "Cafeteria Management Committee",
   SPORT: "Sports Committee",
   CULT: "Cultural Committee",
   HMC: "Hostel Management Committee"
@@ -33,7 +33,7 @@ export const committees = [
   { shortName: "ICT", longName: "ICT Committee" },
   { shortName: "SPC", longName: "Student Placement Cell" },
   { shortName: "SYN", longName: "Annual Festival Committee" },
-  { shortName: "CMC", longName: "Cafetaria Management Committee" },
+  { shortName: "CMC", longName: "Cafeteria Management Committee" },
   { shortName: "SPORT", longName: "Sports Committee" },
   { shortName: "CULT", longName: "Cultural Committee" },
   { shortName: "HMC", longName: "Hostel Management Committee" }

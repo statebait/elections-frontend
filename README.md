@@ -19,7 +19,11 @@ Web App for the DA-IICT Elections built on ReactJS for the STV system of voting.
 
 - You need Node & Yarn to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com).
 
-- You will need to set the API url in the .env.development file to the url you are hosting the api on. By default it is set to http://localhost:5000/
+- The default API URL is set to http://localhost:5000/. However if you have hosted the API on a different URL then setup a .env.development file like below to have a custom API URL.
+
+  ```js
+  REACT_APP_API_URL = /* API URL Here */
+  ```
 
 - Run the following commands in the directory of elections-frontend:
 

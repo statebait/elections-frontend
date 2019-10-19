@@ -24,10 +24,10 @@
     "react-router-dom": "^5.0.0",
     "react-s-alert": "^1.4.1",
     "react-scripts": "^3.0.1",
-    "react-select": "^2.4.1",
+    "react-select": "^3.0.8",
     "redux": "^4.0.0",
     "redux-form": "^8.1.0",
-    "redux-persist": "^5.10.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
@@ -45,7 +45,7 @@
   "devDependencies": {
     "husky": "^3.0.0",
     "prettier": "^1.16.4",
-    "pretty-quick": "^1.10.0"
+    "pretty-quick": "^2.0.0"
   },
   "husky": {
     "hooks": {

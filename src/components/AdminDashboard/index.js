@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { logOut } from "../../store/actions";
-import Alert from "react-s-alert";
 
 //Component Imports
 import AdminNav from "./NavBar";
@@ -13,10 +12,6 @@ import CandidateList from "./DataLists/CandidateList";
 import CommitteeList from "./DataLists/CommitteeList";
 import ResultsView from "./Results/";
 import StatsPage from "./Stats";
-
-//Alert CSS
-import "react-s-alert/dist/s-alert-default.css";
-import "react-s-alert/dist/s-alert-css-effects/slide.css";
 
 const DefaultBlock = () => {
   return (
@@ -47,7 +42,6 @@ class AdminDashboard extends Component {
             <Route path="/admin" component={DefaultBlock} />
           </Switch>
         </div>
-        <Alert stack={{ limit: 3 }} position="bottom-right" />
       </div>
     );
   }

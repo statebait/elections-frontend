@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { sendCommittee } from "../../../store/actions/index";
 import { connect } from "react-redux";
-import Alert from "react-s-alert";
+import { toast } from "react-toastify";
 import Button from "../../UI/Button";
 import { isAlpha } from "../../../utils/utilityFunctions";
 import { batches } from "../../../data";
@@ -16,7 +16,7 @@ class HmcForm extends Component {
     if (prevProps !== this.props) {
       if (this.props.message && this.state.loading) {
         this.setState({ loading: false });
-        Alert.info(this.props.message);
+        toast.info(this.props.message);
       }
     }
   }

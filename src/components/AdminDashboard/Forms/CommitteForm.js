@@ -4,9 +4,8 @@ import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import CommitteeBatchSelect from "../SelectOptions/CommitteeBatchSelect";
 import { sendCommittee } from "../../../store/actions/index";
 import { connect } from "react-redux";
-import Alert from "react-s-alert";
 import Button from "../../UI/Button";
-
+import { toast } from "react-toastify";
 class CommitteeForm extends Component {
   state = {
     loading: false
@@ -16,7 +15,7 @@ class CommitteeForm extends Component {
     if (prevProps !== this.props) {
       if (this.props.message && this.state.loading) {
         this.setState({ loading: false });
-        Alert.info(this.props.message);
+        toast.info(this.props.message);
       }
     }
   }

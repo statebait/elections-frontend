@@ -22,6 +22,15 @@ import LoginPage from "./components/Login/";
 import PollMain from "./components/Poll/";
 import AdminDashboard from "./components/AdminDashboard";
 
+//react-toastify library
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+toast.configure({
+  position: toast.POSITION.BOTTOM_RIGHT,
+  autoClose: 4000,
+  pauseOnHover: false
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

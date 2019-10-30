@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import Button from "../../UI/Button";
-import Alert from "react-s-alert";
+import { toast } from "react-toastify";
 import { fetchCommittees, deleteCommittee } from "../../../store/actions/index";
 
 const customStyles = {
@@ -30,10 +30,10 @@ class CommitteeList extends Component {
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
       if (this.props.error) {
-        Alert.error(this.props.message);
+        toast.error(this.props.message);
       } else if (this.props.message.includes("Deleted Committee")) {
         this.props.fetchCommittees(this.props.token);
-        Alert.success(this.props.message);
+        toast.success(this.props.message);
       }
     }
   }

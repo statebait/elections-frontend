@@ -1,7 +1,7 @@
 import React from "react";
 import CommitteeSelect from "../SelectOptions/CommitteeSelect";
 import CandidateBatchSelect from "../SelectOptions/CandidateBatchSelect";
-import Alert from "react-s-alert";
+import { toast } from "react-toastify";
 import Button from "../../UI/Button";
 import { sendCandidate } from "../../../store/actions/index";
 import { Field, reduxForm, reset } from "redux-form";
@@ -19,7 +19,7 @@ class CandidateForm extends React.Component {
     if (prevProps !== this.props) {
       if (this.props.message && this.state.loading) {
         this.setState({ loading: false });
-        Alert.info(this.props.message);
+        toast.info(this.props.message);
       }
     }
   }

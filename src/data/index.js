@@ -1,9 +1,11 @@
 export const batches = [
-  { value: "1801", label: "Btech 2018" },
+  { value: "1801", label: "BTech 2018" },
   { value: "1701", label: "BTech 2017" },
-  { value: "1601", label: "BTech 2016" },
+  { value: "1901", label: "BTech 2019" },
   { value: "1811", label: "MTech 2018" },
-  { value: "1812", label: "MscIT/Mdes 2018" }
+  { value: "1911", label: "MTech 2019" },
+  { value: "1812", label: "MscIT/Mdes 2018" },
+  { value: "1912", label: "MscIT/Mdes 2019" }
 ];
 
 export const committeeMap = {
@@ -11,7 +13,7 @@ export const committeeMap = {
   ICT: "ICT",
   SPC: "Placement",
   SYN: "Synapse",
-  CMC: "Cafetaria",
+  CMC: "Cafeteria",
   SPORT: "Sports",
   CULT: "Cultural",
   HMC: "Hostel"

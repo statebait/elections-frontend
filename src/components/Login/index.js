@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
             <span>
               <img src={require("../../assets/da_logo.png")} alt="DA Logo" />
             </span>
-            <span style={{ marginLeft: "30px" }}>Daiict Elections</span>
+            <span style={{ marginLeft: "30px" }}>DA-IICT Elections</span>
           </div>
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
             <div>
@@ -111,8 +111,5 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({ validate, form: "login" })(
-  connect(
-    mapStateToProps,
-    { logIn, checkAuth }
-  )(LoginPage)
+  connect(mapStateToProps, { logIn, checkAuth })(LoginPage)
 );

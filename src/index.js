@@ -1,30 +1,23 @@
-// NPM imports
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import PrivateRoute from "./utils/PrivateRoute";
+import { store, persistor } from "./store";
+//Service Worker
+import * as serviceWorker from "./serviceWorker";
 //Global CSS File
 import "./style/index.scss";
 
-//Private Routes
-import PrivateRoute from "./utils/PrivateRoute";
-
-//Store and Persistor
-import { store, persistor } from "./store";
-
-//Create-React-App Import for faster loading
-import * as serviceWorker from "./serviceWorker";
-
 //Component Imports
-import LoginPage from "./components/Login/";
-import PollMain from "./components/Poll/";
-import AdminDashboard from "./components/AdminDashboard";
+const LoginPage = lazy(() => import("./components/Login/"));
+const PollMain = lazy(() => import("./components/Poll"));
+const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
 
-//react-toastify library
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
+//react-toastify configuration
 toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
   autoClose: 4000,
@@ -33,15 +26,17 @@ toast.configure({
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <HashRouter>
-        <Switch>
-          <PrivateRoute path="/admin" component={AdminDashboard} />
-          <PrivateRoute path="/poll" component={PollMain} />
-          <Route path="/" component={LoginPage} />
-        </Switch>
-      </HashRouter>
-    </PersistGate>
+    <Suspense fallback={<div>Loading...</div>}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <Switch>
+            <PrivateRoute path="/admin" component={AdminDashboard} />
+            <PrivateRoute path="/poll" component={PollMain} />
+            <Route path="/" component={LoginPage} />
+          </Switch>
+        </Router>
+      </PersistGate>
+    </Suspense>
   </Provider>,
   document.getElementById("root")
 );

@@ -21,8 +21,8 @@ Web App for the DA-IICT Elections built on ReactJS for the STV system of voting.
 
 - The default API URL is set to http://localhost:5000/. However if you have hosted the API on a different URL then setup a .env.development file like below to have a custom API URL.
 
-  ```js
-  REACT_APP_API_URL = /* API URL Here */
+  ```bash
+  REACT_APP_API_URL=#API URL Here
   ```
 
 - Run the following commands in the directory of elections-frontend:

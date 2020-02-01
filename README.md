@@ -36,4 +36,4 @@ Web App for the DA-IICT Elections built on ReactJS for the STV system of voting.
 
 # License
 
-This project is licensed under the MIT License - Copyright (c) 2019 Mohamed Shadab
+This project is licensed under the MIT License - Copyright (c) 2020 Mohamed Shadab

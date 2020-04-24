@@ -43,8 +43,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "husky": "^3.0.0",
-    "prettier": "^1.16.4",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
     "pretty-quick": "^2.0.0"
   },
   "husky": {

@@ -13,7 +13,7 @@ class LoginPage extends React.Component {
 
   renderField(field) {
     const {
-      meta: { touched, error }
+      meta: { touched, error },
     } = field;
     return (
       <div className="form-group">
@@ -48,7 +48,7 @@ class LoginPage extends React.Component {
         <div className="login-wrapper">
           <div className="login-title">
             <span>
-              <img src={require("../../assets/da_logo.png")} alt="DA Logo" />
+              <img src="/assets/da_logo.png" alt="DA Logo" />
             </span>
             <span style={{ marginLeft: "30px" }}>DA-IICT Elections</span>
           </div>
@@ -106,7 +106,7 @@ function mapStateToProps(state) {
     isAuthenticated: state.auth.isAuthenticated,
     isAdmin: state.auth.isAdmin,
     message: state.auth.message,
-    error: state.auth.error.message
+    error: state.auth.error.message,
   };
 }
 
